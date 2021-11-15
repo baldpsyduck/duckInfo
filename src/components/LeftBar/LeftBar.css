@@ -1,0 +1,10 @@
+.leftBar {
+  display: flex;
+  flex-direction: column;
+}
+.leftBar .projectInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

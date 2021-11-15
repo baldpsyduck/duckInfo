@@ -1,0 +1,58 @@
+.userCardList {
+    width : 100%;
+    height: 100%;
+
+    .administrator {
+        background-color: white;
+        height          : 41%;
+        overflow-y      : scroll;
+        margin-bottom   : 4%;
+    }
+
+    .userMember {
+        height          : 41%;
+        overflow-y      : scroll;
+        background-color: white;
+    }
+
+    .cardListContainer {
+        width                : 100%;
+        display              : grid;
+        grid-template-columns: repeat(auto-fill, minmax(26rem, 1fr));
+        grid-gap             : 30px;
+        padding               : 1rem 0.8rem;
+        justify-content      : center;
+
+        .userCard {
+            padding-bottom: 0;
+            width         : 28rem;
+            height        : 10rem;
+
+            .userInfo {
+                float      : left;
+                margin-left: 1rem;
+
+                .titleContent {
+                    font-size: 2rem;
+
+                    .titleLeft {
+                        color      : #202020;
+                        font-weight: bold;
+                    }
+
+                    .titleRight {
+                        font-size  : 1.8rem;
+                        color      : #c0c0c0;
+                        font-weight: normal;
+                    }
+                }
+            }
+
+            .userAvatar {
+                margin: 0.5rem;
+                float : left
+            }
+        }
+    }
+
+}

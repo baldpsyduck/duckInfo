@@ -1,0 +1,18 @@
+.registerOuter {
+  background: white;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.registerOuter .formOuter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.registerOuter .header {
+  position: absolute;
+  left: 0;
+  top: 0;
+}

@@ -1,0 +1,62 @@
+@stdSize : 37.1px;
+
+.myPagination {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+
+    
+    .forward {
+        background     : url(../../assets/img/forward.png) no-repeat center 0*@stdSize;
+        background-size: cover;
+    }
+    
+    .backward {
+        background     : url(../../assets/img/backward.png) no-repeat center 0*@stdSize;
+        background-size: cover;
+    }
+    
+    li{
+        height :37.1px;
+        display : flex;
+        align-items : center;
+    }
+
+    .ant-pagination-disabled {
+        .forward {
+            background     : url(../../assets/img/forwardDisable.png) no-repeat center 0*@stdSize;
+            background-size: cover;
+        }
+        
+        .backward {
+            background     : url(../../assets/img/backwardDisable.png) no-repeat center 0*@stdSize;
+            background-size: cover;
+        }
+    }
+    
+    
+    .ant-pagination-item {
+        background-color: transparent;
+        border          : 0;
+
+        a {
+            font-family: STZhongsong;
+            color      : #f6b331;
+            font-size  : @stdSize;
+        }
+    }
+
+    .ant-pagination-item-active {
+        width : @stdSize;
+        height: @stdSize;
+
+        a {
+            width          : @stdSize;
+            height         : @stdSize;
+            background     : url(../../assets/img/activePage.png) no-repeat center 0*@stdSize;
+            background-size: cover;
+            color          : transparent;
+        }
+    }
+
+}

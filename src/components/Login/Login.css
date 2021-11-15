@@ -1,0 +1,23 @@
+.loginOuter {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-rows: 35px 1fr;
+  grid-template-columns: 0.3fr 1fr 0.3fr;
+  grid-template-areas: "header header closer" "form form form";
+}
+.loginOuter .close {
+  grid-area: closer;
+}
+.loginOuter .form {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  grid-area: form;
+  margin: 35px;
+  height: 33rem;
+}
+.loginOuter .form .logo {
+  background: url(../../assets/img/logoR.jpg) 0px / 84px;
+}

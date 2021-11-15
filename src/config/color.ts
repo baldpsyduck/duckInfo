@@ -1,0 +1,1 @@
+export const basicColor='#ffc11f'

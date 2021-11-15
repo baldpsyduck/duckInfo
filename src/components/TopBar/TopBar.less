@@ -1,0 +1,44 @@
+@stdSize: 0.045vw;
+@logoSize: 60 * @stdSize;
+
+.basicStyle {
+  background-color: black;
+}
+
+.basicFlex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topBarOuter:extend(.basicStyle, .basicFlex) {
+  padding: 0 1rem;
+
+  .left:extend(.basicStyle, .basicFlex) {
+    .titleOuter:extend(.basicStyle, .basicFlex) {
+      .logo {
+        background: url(../../assets/img/logo.png) no-repeat center 0 * @stdSize /
+          @logoSize;
+        background-size: cover;
+      }
+    }
+
+    .menu :extend(.basicStyle, .basicFlex) {
+      .menuInner:extend(.basicFlex) {
+        justify-content: center;
+      }
+
+      .active {
+        transition: 300ms;
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+  }
+
+}

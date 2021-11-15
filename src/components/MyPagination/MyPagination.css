@@ -1,0 +1,46 @@
+.myPagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.myPagination .forward {
+  background: url(../../assets/img/forward.png) no-repeat center 0px;
+  background-size: cover;
+}
+.myPagination .backward {
+  background: url(../../assets/img/backward.png) no-repeat center 0px;
+  background-size: cover;
+}
+.myPagination li {
+  height: 37.1px;
+  display: flex;
+  align-items: center;
+}
+.myPagination .ant-pagination-disabled .forward {
+  background: url(../../assets/img/forwardDisable.png) no-repeat center 0px;
+  background-size: cover;
+}
+.myPagination .ant-pagination-disabled .backward {
+  background: url(../../assets/img/backwardDisable.png) no-repeat center 0px;
+  background-size: cover;
+}
+.myPagination .ant-pagination-item {
+  background-color: transparent;
+  border: 0;
+}
+.myPagination .ant-pagination-item a {
+  font-family: STZhongsong;
+  color: #f6b331;
+  font-size: 37.1px;
+}
+.myPagination .ant-pagination-item-active {
+  width: 37.1px;
+  height: 37.1px;
+}
+.myPagination .ant-pagination-item-active a {
+  width: 37.1px;
+  height: 37.1px;
+  background: url(../../assets/img/activePage.png) no-repeat center 0px;
+  background-size: cover;
+  color: transparent;
+}

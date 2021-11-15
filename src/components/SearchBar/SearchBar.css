@@ -1,0 +1,11 @@
+.searchBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.searchBar .searchBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

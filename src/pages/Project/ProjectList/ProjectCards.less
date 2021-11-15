@@ -1,0 +1,28 @@
+.projectList {
+  .plMain {
+
+    display: flex;
+    flex-direction: column;
+    grid-gap: 30px;
+    justify-content: center;
+
+    .cardContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(24rem, 0.4fr));
+      grid-gap: 30px;
+
+      .paragraphInCard {
+        padding-bottom: 0.7rem;
+        width: 100%;
+
+        .threeColumns {
+          padding: 0 2rem 0 2rem;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}

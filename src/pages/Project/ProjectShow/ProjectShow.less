@@ -1,0 +1,103 @@
+.psMainbas {
+    margin-top: 30px;
+    width     : 100%;
+}
+
+.projectShow {
+
+    display    : flex;
+    align-items: center;
+
+    .psMain {
+        padding       : 30px;
+        flex-direction: column;
+        align-items   : center;
+
+        .psTitle {
+            width: 100%;
+
+               
+                    .active{
+                        color: black;
+                    }
+                
+            
+        }
+
+        .psMain_Pic {
+            margin-top: 30px;
+        }
+
+        .psMain_teamForm:extend(.psMainbas) {
+            .team {
+                width         : 100%;
+                display       : flex;
+                flex-direction: column;
+
+                .memList {
+                    display      : flex;
+                    flex-wrap    : wrap;
+                    grid-gap     : 30px;
+                    margin-bottom: 30px;
+                    align-items  : center;
+                }
+            }
+        }
+
+        .psMain_NewPro:extend(.psMainbas) {}
+
+        .psMain_Progress:extend(.psMainbas) {}
+
+    }
+
+
+
+    .psRight {
+        padding       : 30px;
+        display       : flex;
+        flex-direction: column;
+        align-items   : center;
+
+        .projectIntr {
+            .tagsContainer {
+                display    : flex;
+                flex-wrap  : wrap;
+                grid-gap   : 6px;
+                margin-top : 20px;
+                align-items: center;
+            }
+        }
+
+        .projectSrc:extend(.psMainbas) {
+            .linksContainer {
+                display       : flex;
+                flex-direction: column;
+            }
+        }
+
+        .projectHonor:extend(.psMainbas) {}
+    }
+}
+
+.progressTop {
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+
+    .progressBar {
+        display        : flex;
+        justify-content: space-evenly;
+
+        .PBP {
+            margin-top: -50px;
+
+            .head {
+                display        : flex;
+                flex-direction : column;
+                justify-content: space-between;
+                align-items    : center;
+            }
+
+        }
+    }
+}

@@ -1,0 +1,36 @@
+.basicStyle,
+.topBarOuter,
+.topBarOuter .left,
+.topBarOuter .left .titleOuter,
+.topBarOuter .left .menu {
+  background-color: black;
+}
+.basicFlex,
+.topBarOuter,
+.topBarOuter .left,
+.topBarOuter .left .titleOuter,
+.topBarOuter .left .menu,
+.topBarOuter .left .menu .menuInner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.topBarOuter {
+  padding: 0 1rem;
+}
+.topBarOuter .left .titleOuter .logo {
+  background: url(../../assets/img/logo.png) no-repeat center 0vw / 2.7vw;
+  background-size: cover;
+}
+.topBarOuter .left .menu .menuInner {
+  justify-content: center;
+}
+.topBarOuter .left .menu .active {
+  transition: 300ms;
+}
+.topBarOuter .right {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+}
