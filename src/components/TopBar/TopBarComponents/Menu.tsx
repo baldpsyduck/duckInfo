@@ -27,7 +27,7 @@ export default function Menu() {
 const MenuInner = styled(NavLink)`
   padding: 0px 30px;
   font-family: STZhongsong;
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   color: ${basicColor};
-  justify-content: center;
+  height: 7.48rem;
 `;

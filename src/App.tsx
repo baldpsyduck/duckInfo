@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo } from "react";
+import { Suspense, lazy, useState, useMemo, useRef, RefObject } from "react";
 import { Route, Switch, Redirect, useHistory } from "react-router";
 
 import TopBar from "components/TopBar";
@@ -6,15 +6,26 @@ import Login from "components/Login";
 import Register from "pages/Register";
 import Home from "pages/Home";
 import Loading from "pages/Loading";
+import Calendar from "pages/Calendar";
 
 import { useAppDispatch } from "store/hooks";
 import { useAppSelector } from "store/hooks";
 import { updateLoc } from "store/features/locSlice";
 import { setClientC } from "store/features/moveSlice";
-import { updateUsername } from "store/features/meSlice";
+import { Carousel } from "antd";
+import { CSSTransition } from "react-transition-group";
+import { ArrowDownOutlined } from "@ant-design/icons";
 
-import "./App.css";
-import LeftBar from "components/LeftBar";
+import "./App.less";
+import styled from "@emotion/styled";
+
+const contentStyle: any = {
+  height: "100vh",
+  color: "#fff",
+  lineHeight: "160px",
+  textAlign: "center",
+  background: "#364d79",
+};
 
 const Project = lazy(() => import("pages/Project"));
 const User = lazy(() => import("pages/User"));
@@ -26,7 +37,11 @@ export default function App() {
   history.listen((route) => dispatch(updateLoc(route.pathname)));
 
   const login = useAppSelector((store) => store.login);
+  const loc = useAppSelector((store) => store.loc.location);
   const selected = useAppSelector((store) => store.move.selected);
+
+  const divRef = useRef<HTMLDivElement>(null);
+  const [calendar, setcalendar] = useState<boolean>(false);
 
   const mouseMove = (e: any) => {
     if (selected) {
@@ -34,16 +49,84 @@ export default function App() {
     }
   };
 
+  const [wheel, setwheel] = useState<boolean>(loc == "/home");
+
+  useMemo(() => {
+    setwheel(loc == "/home");
+  }, [loc]);
+
   return (
-    <div className="app" onMouseMove={(e) => mouseMove(e)}>
-      <TopBar />
+    <>
+      <div
+        className={"app"}
+        onMouseMove={(e) => mouseMove(e)}
+        onWheel={(e) => {
+          setwheel(
+            e.deltaY < 0 && loc == "/home" && 0 == divRef.current?.scrollTop
+          );
+        }}
+      >
+        <CSSTransition
+          in={calendar}
+          classNames={"calContainer"}
+          timeout={300}
+          unmountOnExit
+        >
+          <Calendar
+            onBtnClick={() => {
+              setcalendar(false);
+            }}
+          />
+        </CSSTransition>
 
-      <div className="behind">
-        {login.chooseLogin && <Login />}
+        <TopBar wheel={wheel} />
+        <TransationContainer>
+          <CSSTransition
+            in={wheel}
+            classNames={"cContainer"}
+            timeout={300}
+            unmountOnExit
+          >
+            <Carousel autoplay className="cContainer" dotPosition={"left"}>
+              <div>
+                <h3 style={contentStyle}>1</h3>
+              </div>
+              <div>
+                <h3 style={contentStyle}>2</h3>
+              </div>
+              <div>
+                <h3 style={contentStyle}>3</h3>
+              </div>
+              <div>
+                <h3 style={contentStyle}>4</h3>
+              </div>
+              <div>
+                <h3 style={contentStyle}>5</h3>
+              </div>
+            </Carousel>
+          </CSSTransition>
+        </TransationContainer>
 
-        <LeftBar />
+        {login.chooseLogin && (
+          <LoginContainer>
+            <Login />
+          </LoginContainer>
+        )}
 
-        <div className="main">
+        <div>
+          <ClanderBtn
+            onClick={() => {
+              setcalendar(true);
+            }}
+          >
+            <div>
+              日
+              <Line />历
+            </div>
+          </ClanderBtn>
+        </div>
+
+        <div className="behind" ref={divRef}>
           <Suspense fallback={<Loading />}>
             <Switch>
               <Route path="/home" component={Home} />
@@ -54,8 +137,124 @@ export default function App() {
             </Switch>
           </Suspense>
         </div>
+
+        <CSSTransition
+          in={wheel}
+          classNames={"bContainer"}
+          timeout={300}
+          unmountOnExit
+        >
+          <Footer>
+            <DownBtn
+              onClick={() => {
+                setwheel(false);
+              }}
+            >
+              <ArrowDownOutlined />
+            </DownBtn>
+          </Footer>
+        </CSSTransition>
+        <div className="bottom">Made by balduck @2021 兴趣开放实验室</div>
       </div>
-      <div className="bottom">Made by OpenLab-web @2021 兴趣开放实验室</div>
-    </div>
+    </>
   );
 }
+
+const TransationContainer = styled.div`
+  .cContainer {
+    height: 100vh;
+    width: 100vw;
+    li {
+      background-color: #ffc11f;
+    }
+  }
+  .cContainer-enter {
+    overflow: hidden;
+    height: 0vh;
+  }
+
+  .cContainer-enter-active {
+    height: 100vh;
+    transition: 300ms;
+  }
+  .cContainer-exit {
+    height: 100vh;
+  }
+  .cContainer-exit-active {
+    height: 7.48rem;
+    transition: 300ms;
+    overflow: hidden;
+  }
+  .cContainer-exit-done {
+    height: 7.48rem;
+    overflow: hidden;
+  }
+`;
+
+const cBtnSize = 20;
+
+const ClanderBtn = styled.button`
+  width: ${cBtnSize}rem;
+  height: ${cBtnSize}rem;
+  top: 50vh;
+  right:0;
+  z-index: 999;
+  background: transparent;
+  position: absolute;
+  margin-top: -${cBtnSize / 2}rem;
+  margin-right: -${cBtnSize / 2}rem;
+  border: 2px solid #ffc11f;
+  border-radius: ${cBtnSize / 2}rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  div {
+    text-align: left;
+    justify-content: flex-end;
+    flex-direction: column;
+    color: #ffc11f;
+    font-family: FZYaoTi;
+    font-size: 5rem;
+    display: flex;
+    width: ${(cBtnSize * 2) / 3}rem;
+  }
+`;
+
+const Line = styled.div`
+  width: ${cBtnSize / 3}rem;
+  height: 2px;
+  background-color: #ffc11f;
+`;
+
+const dBtnSize = 5;
+const DownBtn = styled.button`
+  margin-left: -${dBtnSize / 2}rem;
+  width: ${dBtnSize}rem;
+  height: ${dBtnSize}rem;
+  font-size: ${dBtnSize / 2}rem;
+  color: #ffc11f;
+`;
+
+const Footer = styled.div`
+  bottom: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+  height: 7.48rem;
+  width: 100vw;
+`;
+
+const LoginContainer= styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color:transparent;
+  z-index: 9999;
+  position: absolute;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  pointer-events:none;
+`

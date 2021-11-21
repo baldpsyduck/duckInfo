@@ -23,5 +23,5 @@ export default function UserPullDown() {
 }
 
 const PulldownStyle = styled(Link)`
-  color: black;
+  color: transparent;
 `;

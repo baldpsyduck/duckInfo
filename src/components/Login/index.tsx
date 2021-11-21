@@ -103,6 +103,7 @@ const LoginOuter = styled(MoveDiv)`
   border: 1px solid #fff;
   background: white;
   box-shadow: 0px 0px 50px rgba(192, 192, 192, 0.3);
+  pointer-events: auto;
 `;
 
 const Logo = styled.div`

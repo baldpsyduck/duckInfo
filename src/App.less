@@ -1,99 +1,145 @@
-@stdSize : 0.068rem;
+@stdSize: 0.068rem;
 
 html {
-    font-size  : 62.5%;
-    font-family: "华文中宋", monospace;
+  font-size: 62.5%;
+  font-family: "华文中宋", monospace;
 }
 
 html body #root .App {
-    /* full viewport height */
-    min-height: 100vh;
+  /* full viewport height */
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 #root {
-    height: 100vh;
+  height: 100vh;
 }
 
 ::-webkit-scrollbar {
-    width: 0;
+  width: 0;
 }
 
+body,
+html {
+  overflow: hidden;
+}
 
 button {
-    background-color: rgba(0, 0, 0, 0);
-    border          : 0;
-    padding         : 0;
-    cursor          : pointer;
-    outline         : none;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
 }
 
 .app {
-    height            : 100vh;
-    width             : 100vw;
-    display           : grid;
-    grid-template-rows: 110*@stdSize 1fr;
-    grid-template-areas:
-        "header"
-        "behind"
-    ;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  background-color: #f0f2f5;
+  overflow: hidden;
+  flex-flow: column;
+  justify-content: stretch;
 
-    /*定义滚动条轨道 内阴影+圆角*/
-    ::-webkit-scrollbar-track {
-        border-radius   : 3px;
-        background-color: lightgray;
+  /*定义滚动条轨道 内阴影+圆角*/
+  ::-webkit-scrollbar-track {
+    border-radius: 3px;
+    background-color: lightgray;
+  }
+
+  /*定义滑块 内阴影+圆角*/
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: #2fb9f4;
+  }
+
+  /*定义最上方和最下方的按钮*/
+  ::-webkit-scrollbar-button {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar {
+    height: 3px;
+    width: 3px;
+  }
+
+  .topBarOuter {
+    grid-area: header;
+  }
+
+  .behind {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    background-color: transparent;
+    flex: auto;
+
+    .loginContainer {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 50%;
+      z-index: 99999;
     }
+  }
 
-    /*定义滑块 内阴影+圆角*/
-    ::-webkit-scrollbar-thumb {
-        border-radius   : 3px;
-        background-color: #2fb9f4;
-    }
+  .bottom {
+    flex-grow: 0;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    grid-area: bottom;
+  }
 
-    /*定义最上方和最下方的按钮*/
-    ::-webkit-scrollbar-button {
-        background: transparent;
-    }
+  .bContainer-enter {
+    overflow: hidden;
+    height: 0vh;
+  }
 
-    ::-webkit-scrollbar {
-        height: 3px;
-        width : 3px;
-    }
+  .bContainer-enter-active {
+    height: 7.48rem;
 
+    transition: 300ms;
+  }
+  .bContainer-exit {
+    height: 7.48rem;
+  }
+  .bContainer-exit-active {
+    height: 0rem;
+    transition: 300ms;
+    overflow: hidden;
+  }
 
-    .topBarOuter {
-        grid-area: header;
-    }
+  .bContainer-exit-done {
+    height: 0rem;
+    overflow: hidden;
+  }
 
-    .behind {
-        position        : relative;
-        width           : 100%;
-        grid-area       : behind;
-        display         : flex;
-        flex-direction  : row;
-        overflow        : hidden;
-        background-color: #f0f2f5;
+  .calContainer-enter {
+    overflow: hidden;
+    width: 0vw;
+  }
 
-        .loginContainer {
-            position : absolute;
-            transform: translate(-50%, -50%);
-            left     : 50%;
-            top      : 50%;
-            z-index  : 99999;
-        }
+  .calContainer-enter-active {
+    width: 100vw;
+    transition: 300ms;
+  }
+  .calContainer-exit {
+    width: 100vw;
+  }
+  .calContainer-exit-active {
+    width: 0vw;
+    transition: 300ms;
+    overflow: hidden;
+  }
 
-        .main {
-            background-color: #f0f2f5;
-            width           : 100%;
-        }
-
-    }
-
-    .bottom {
-        height          : 35px;
-        display         : flex;
-        align-items     : center;
-        justify-content : center;
-        background-color: #f0f2f5;
-    }
-
+  .calContainer-exit-done {
+    width: 0vw;
+    overflow: hidden;
+  }
 }

@@ -61,7 +61,7 @@ export default function MoveDiv(props: MoveDivProps) {
 
             style={
                 thisComponent ?
-                    { ...myStyle, position: "absolute", left: cilentC[0] - initalC[0] + 'px', top: cilentC[1] - initalC[1] + 'px', zIndex: 999999999 }
+                    { ...myStyle, position: "absolute", left: cilentC[0] - initalC[0] + 'px', top: cilentC[1] - initalC[1] + 'px', zIndex: 998 }
                     : {  ...myStyle, position: "absolute", left: divRef.current?.style.left, top: divRef.current?.style.top }}
 
         >

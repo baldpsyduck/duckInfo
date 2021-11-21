@@ -7,6 +7,7 @@ import projectListReducer from './features/projectListSlice';
 import userListReducer from './features/userListSlice';
 import projectReducer from './features/projectSlice';
 import userReducer from './features/userSlice';
+import topReducer from './features/topSlice';
 
 const store = configureStore({
     reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
         userList: userListReducer,
         project: projectReducer,
         user:userReducer,
+        top:topReducer,
     },
 }); 
 

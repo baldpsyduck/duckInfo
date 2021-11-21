@@ -2,7 +2,7 @@
 @logoSize: 60 * @stdSize;
 
 .basicStyle {
-  background-color: black;
+  background-color: transparent;
 }
 
 .basicFlex {
@@ -30,6 +30,8 @@
       }
 
       .active {
+        background-color: #ffc11f;
+        color: white;
         transition: 300ms;
       }
     }
@@ -40,5 +42,56 @@
     flex-direction: row-reverse;
     justify-content: space-evenly;
   }
+}
 
+.tContainer {
+  background: black;
+  position: static;
+}
+
+.hometCotainer {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  position: absolute;
+}
+
+.tContainer-exit {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.tContainer-exit-active {
+  background: black;
+  position: absolute;
+  transition: 300ms;
+}
+
+.tContainer-exit-done {
+  background: black;
+  position: static;
+  transition: 300ms;
+}
+
+.tContainer-enter {
+  background: black;
+}
+
+.tContainer-enter-active {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  transition: 300ms;
+}
+
+.tContainer-enter-done {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  position: absolute;
 }
