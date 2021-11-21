@@ -1,38 +1,22 @@
 import { Tree } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
-const treeData = [
-  {
-    title: "2021年",
-    key: "2021",
+const date = new Date();
+
+let treeData: Array<any> = [];
+
+for (let j = date.getFullYear(); j > 2019; j--) {
+  let children: Array<any> = [];
+  for (let i = j == date.getFullYear() ? date.getMonth() + 1 : 12; i > 0; i--) {
+    children.push({ title: `${i}月`, key: `${j}/${i}` });
+  }
+  treeData.push({
+    title: `${j}年`,
+    key: `${j}`,
     selectable: false,
-    children: [
-      {
-        title: "1月",
-        key: "2021/1",
-      },
-      {
-        title: "2月",
-        key: "2021/2",
-      },
-    ],
-  },
-  {
-    title: "2020年",
-    key: "2020",
-    selectable: false,
-    children: [
-      {
-        title: "1月",
-        key: "2020/1",
-      },
-      {
-        title: "2月",
-        key: "2020/2",
-      },
-    ],
-  },
-];
+    children: children,
+  });
+}
 
 interface TreeProps {
   onBtnClick: (id: string) => void;
@@ -43,16 +27,15 @@ export default function Timer(props: TreeProps) {
 
   return (
     <>
-    <span>时间轴</span>
+      <span>时间轴</span>
       <Tree
         showIcon
-        defaultExpandAll
-        defaultSelectedKeys={["0-0-0"]}
+        defaultSelectedKeys={["2021"]}
         switcherIcon={<DownOutlined />}
         treeData={treeData}
         showLine
         onSelect={(e) => {
-          onBtnClick(`calPage${e[0]}`);
+          e[0] && onBtnClick(`${e[0]}`);
         }}
       />
     </>

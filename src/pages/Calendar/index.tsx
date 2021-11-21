@@ -1,27 +1,48 @@
 import styled from "@emotion/styled";
 import Data from "./Data";
 import Timer from "./Timer";
+import {informs} from 'config/informs';
 
-export default function Calendar({ onBtnClick }: { onBtnClick: () => void }) {
+export default function Calendar({ onBtnClick,className }: { onBtnClick: () => void,className: string}) {
   return (
-    <Container>
+    <Container className={className}>
       <BackBtn onClick={onBtnClick}>
         <div>
-          反
+          返
           <Line />回
         </div>
       </BackBtn>
 
       <DataContainer>
         <div>
-          
+          {informs.map((data) => {
+            return (
+              <>
+                <Data data={data} />
+                <Space />
+              </>
+            );
+          })}
         </div>
       </DataContainer>
 
       <TimerShaft>
         <Timer
           onBtnClick={(e) => {
-            const space = document.getElementById(e);
+            let date = e.split(/\//).map((e: any) => {
+              return e * 1;
+            });
+            while (!document.getElementById(`calPage${date[0]}/${date[1]}`)) {
+              if (date[1] == 1) {
+                date[0]--;
+                date[1] = 12;
+              } else {
+                date[1]--;
+              }
+            }
+            const space = document.getElementById(
+              `calPage${date[0]}/${date[1]}`
+            );
             space?.scrollIntoView({ behavior: "smooth" });
           }}
         />
@@ -30,11 +51,16 @@ export default function Calendar({ onBtnClick }: { onBtnClick: () => void }) {
   );
 }
 
+Calendar.defaultProps={
+  className:""
+}
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   right: 0;
+  top: 0;
   background-color: white;
   z-index: 9999;
 `;
@@ -89,14 +115,15 @@ const TimerShaft = styled.div`
 const DataContainer = styled.div`
   padding-top: 5rem;
   position: absolute;
-  left: 7vw;
-  width: 86vw;
+  left: 12rem;
+  right: 12rem;
   max-height: 100vh;
   min-width: 120rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   overflow: auto;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Space = styled.div`

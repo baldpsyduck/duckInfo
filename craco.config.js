@@ -1,5 +1,4 @@
 const CracoAntDesignPlugin = require("craco-antd");
-import { basicColor } from "./src/config/color";
 
 module.exports = {
   plugins: [
@@ -7,7 +6,7 @@ module.exports = {
       plugin: CracoAntDesignPlugin,
       options: {
         customizeTheme: {
-          "@primary-color": `${basicColor}`,
+          "@primary-color": "#ffc11f",
         },
       },
     },

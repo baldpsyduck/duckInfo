@@ -7,6 +7,9 @@ import Register from "pages/Register";
 import Home from "pages/Home";
 import Loading from "pages/Loading";
 import Calendar from "pages/Calendar";
+import { basicColor } from "config/color";
+
+import { homeInfos } from "config/informs";
 
 import { useAppDispatch } from "store/hooks";
 import { useAppSelector } from "store/hooks";
@@ -50,6 +53,7 @@ export default function App() {
   };
 
   const [wheel, setwheel] = useState<boolean>(loc == "/home");
+  const [cnumber, setcnumber] = useState<number>(0);
 
   useMemo(() => {
     setwheel(loc == "/home");
@@ -61,21 +65,18 @@ export default function App() {
         className={"app"}
         onMouseMove={(e) => mouseMove(e)}
         onWheel={(e) => {
-          setwheel(
-            e.deltaY < 0 && loc == "/home" && 0 == divRef.current?.scrollTop
-          );
+          !calendar &&
+            setwheel(
+              e.deltaY < 0 && loc == "/home" && 0 == divRef.current?.scrollTop
+            );
         }}
       >
-        <CSSTransition
-          in={calendar}
-          classNames={"calContainer"}
-          timeout={300}
-          unmountOnExit
-        >
+        <CSSTransition in={calendar} classNames={"calContainer"} timeout={300}>
           <Calendar
             onBtnClick={() => {
               setcalendar(false);
             }}
+            className={calendar ? "" : "calContainer"}
           />
         </CSSTransition>
 
@@ -87,23 +88,24 @@ export default function App() {
             timeout={300}
             unmountOnExit
           >
-            <Carousel autoplay className="cContainer" dotPosition={"left"}>
-              <div>
-                <h3 style={contentStyle}>1</h3>
-              </div>
-              <div>
-                <h3 style={contentStyle}>2</h3>
-              </div>
-              <div>
-                <h3 style={contentStyle}>3</h3>
-              </div>
-              <div>
-                <h3 style={contentStyle}>4</h3>
-              </div>
-              <div>
-                <h3 style={contentStyle}>5</h3>
-              </div>
-            </Carousel>
+            <div className="cContainer">
+              <Carousel
+                autoplay
+                className="cContainer"
+                dotPosition={"left"}
+                beforeChange={(f, t) => {
+                  setcnumber(t);
+                }}
+              >
+                {homeInfos.map((info) => {
+                  return (
+                    <div>
+                      <h3 style={contentStyle}>{info.key}</h3>
+                    </div>
+                  );
+                })}
+              </Carousel>
+            </div>
           </CSSTransition>
         </TransationContainer>
 
@@ -145,6 +147,9 @@ export default function App() {
           unmountOnExit
         >
           <Footer>
+            <InfoBtn>
+              <button>{homeInfos[cnumber].info}</button>
+            </InfoBtn>
             <DownBtn
               onClick={() => {
                 setwheel(false);
@@ -152,8 +157,10 @@ export default function App() {
             >
               <ArrowDownOutlined />
             </DownBtn>
+            <Space />
           </Footer>
         </CSSTransition>
+
         <div className="bottom">Made by balduck @2021 兴趣开放实验室</div>
       </div>
     </>
@@ -165,7 +172,7 @@ const TransationContainer = styled.div`
     height: 100vh;
     width: 100vw;
     li {
-      background-color: #ffc11f;
+      background-color: ${basicColor};
     }
   }
   .cContainer-enter {
@@ -197,13 +204,13 @@ const ClanderBtn = styled.button`
   width: ${cBtnSize}rem;
   height: ${cBtnSize}rem;
   top: 50vh;
-  right:0;
+  right: 0;
   z-index: 999;
   background: transparent;
   position: absolute;
   margin-top: -${cBtnSize / 2}rem;
   margin-right: -${cBtnSize / 2}rem;
-  border: 2px solid #ffc11f;
+  border: 2px solid ${basicColor};
   border-radius: ${cBtnSize / 2}rem;
   display: flex;
   align-items: center;
@@ -213,7 +220,7 @@ const ClanderBtn = styled.button`
     text-align: left;
     justify-content: flex-end;
     flex-direction: column;
-    color: #ffc11f;
+    color: ${basicColor};
     font-family: FZYaoTi;
     font-size: 5rem;
     display: flex;
@@ -224,7 +231,7 @@ const ClanderBtn = styled.button`
 const Line = styled.div`
   width: ${cBtnSize / 3}rem;
   height: 2px;
-  background-color: #ffc11f;
+  background-color: ${basicColor};
 `;
 
 const dBtnSize = 5;
@@ -233,28 +240,42 @@ const DownBtn = styled.button`
   width: ${dBtnSize}rem;
   height: ${dBtnSize}rem;
   font-size: ${dBtnSize / 2}rem;
-  color: #ffc11f;
+  color: ${basicColor};
 `;
 
 const Footer = styled.div`
   bottom: 0;
   position: absolute;
   display: flex;
-  justify-content: center;
+  padding: 0 5rem;
+  justify-content: stretch;
   align-items: center;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
   height: 7.48rem;
   width: 100vw;
 `;
 
-const LoginContainer= styled.div`
+const LoginContainer = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color:transparent;
+  background-color: transparent;
   z-index: 9999;
   position: absolute;
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
-  pointer-events:none;
-`
+  pointer-events: none;
+`;
+
+const InfoBtn = styled.div`
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+  font-size: 2rem;
+  flex: 1;
+`;
+
+const Space = styled.div`
+  flex: 1;
+`;
