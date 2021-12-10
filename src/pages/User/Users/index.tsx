@@ -22,25 +22,7 @@ export default function Users() {
 
   return (
     <div className="userCardList">
-      <Typography.Title level={3}>行政组</Typography.Title>
-      <div className="administrator">
-        {adminUserList.length !== 0 &&
-          <>
-            <UserCardList userList={adminUserList} />
-
-          </>
-        }
-      </div>
-
-      <Typography.Title level={3}>成员</Typography.Title>
-      <div className="userMember">
-        {memberUserList.length !== 0 &&
-          <>
-            <UserCardList userList={memberUserList} />
-          </>
-        }
-      </div>
-
+        users...
     </div >
   );
 };

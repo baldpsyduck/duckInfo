@@ -1,6 +1,5 @@
-import { UserOutlined } from "@ant-design/icons";
+import { BellOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
-import { Avatar } from "antd";
 import { Popover } from "antd";
 import UserPullDown from "./UserPullDown";
 import { basicColor } from "config/color";
@@ -16,8 +15,12 @@ export default function User() {
   };
 
   return (
-    <div className="user">
+    <Container className="user">
       {me.username ? (
+      <>
+        <Message>
+          <BellOutlined />
+        </Message>
         <Popover
           placement="topLeft"
           trigger="click"
@@ -25,11 +28,10 @@ export default function User() {
           content={<UserPullDown />}
         >
           <button>
-            <LoginBtn className="headPortrait">
-              <span>&nbsp;登&nbsp;录&nbsp;</span>
-            </LoginBtn>
+            <Avatar />
           </button>
         </Popover>
+      </>
       ) : (
         <button>
           <LoginBtn className="headPortrait"  onClick={click}>
@@ -37,12 +39,34 @@ export default function User() {
           </LoginBtn>
         </button>
       )}
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+width:10rem;
+display:flex;
+justify-content:space-between;
+align-items:center;
+`;
+
+const Message = styled.button`
+  color: white;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  font-size:2.8rem;
+`;
 
 const LoginBtn = styled.div`
   border: 1px solid ${basicColor};
   padding: 0.5rem 0.8rem;
   color: ${basicColor};
+`;
+
+const Avatar = styled.div`
+  width: 4rem;
+  height: 4rem;
+  background-color: gray;
+  border-radius: 4rem;
 `;

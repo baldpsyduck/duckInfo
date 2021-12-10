@@ -3,7 +3,6 @@ import { Button } from "antd";
 import Avatars from "components/Avatars";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import { ShowMD } from "components/MarkDown";
 import { CharacterBox, FlexLine, MembersContainer } from "./StyleComponets";
 import Title from "./Title";
 import { simpleUser } from "types/user";
@@ -21,7 +20,7 @@ export default function GroundPoints(props: propsType) {
 
   const { members, title, num } = props;
 
-  const [mems, setmems] = useState(members);
+  const [mems, setmems] = useState(members); 
 
   const TransationStyle = styled.div`
     + div {
@@ -122,14 +121,13 @@ export default function GroundPoints(props: propsType) {
                 <>
                   <div />
                   <MDContainer>
-                    <ShowMD />
                   </MDContainer>
                 </>
               </Title>
             </CSSTransition>
           </div>
         </>
-      </FlexLine>
+      </FlexLine> 
     </>
   );
 }

@@ -30,8 +30,8 @@ const contentStyle: any = {
   background: "#364d79",
 };
 
-const Project = lazy(() => import("pages/Project"));
 const User = lazy(() => import("pages/User"));
+const Infos = lazy(() => import("pages/Infos"));
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -65,10 +65,12 @@ export default function App() {
         className={"app"}
         onMouseMove={(e) => mouseMove(e)}
         onWheel={(e) => {
-          !calendar &&
+          if (!calendar) {
             setwheel(
               e.deltaY < 0 && loc == "/home" && 0 == divRef.current?.scrollTop
             );
+            setcnumber(0);
+          }
         }}
       >
         <CSSTransition in={calendar} classNames={"calContainer"} timeout={300}>
@@ -81,6 +83,7 @@ export default function App() {
         </CSSTransition>
 
         <TopBar wheel={wheel} />
+
         <TransationContainer>
           <CSSTransition
             in={wheel}
@@ -115,24 +118,26 @@ export default function App() {
           </LoginContainer>
         )}
 
-        <div>
-          <ClanderBtn
-            onClick={() => {
-              setcalendar(true);
-            }}
-          >
-            <div>
-              日
-              <Line />历
-            </div>
-          </ClanderBtn>
-        </div>
+        {loc === "/home" && (
+          <div>
+            <ClanderBtn
+              onClick={() => {
+                setcalendar(true);
+              }}
+            >
+              <div>
+                日
+                <Line />历
+              </div>
+            </ClanderBtn>
+          </div>
+        )}
 
         <div className="behind" ref={divRef}>
           <Suspense fallback={<Loading />}>
             <Switch>
               <Route path="/home" component={Home} />
-              <Route path="/project" component={Project} />
+              <Route path="/infos" component={Infos} />
               <Route path="/user" component={User} />
               <Route path="/register" component={Register} />
               <Redirect to="/home" />

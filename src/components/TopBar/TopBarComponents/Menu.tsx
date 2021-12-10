@@ -9,15 +9,15 @@ export default function Menu() {
         首页
       </MenuInner>
 
-      <MenuInner activeClassName="active" className="menuInner" to="/project">
+      <MenuInner activeClassName="active" className="menuInner" to="/user/users">
         组织列表
       </MenuInner>
 
-      <MenuInner activeClassName="active" className="menuInner" to="/user">
+      <MenuInner activeClassName="active" className="menuInner" to="/infos/vol">
         志愿招募
       </MenuInner>
 
-      <MenuInner activeClassName="active" className="menuInner" to="/user">
+      <MenuInner activeClassName="active" className="menuInner" to="/infos/hot">
         热点活动
       </MenuInner>
     </div>

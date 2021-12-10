@@ -6,22 +6,41 @@ import { Link } from "react-router-dom";
 export default function UserPullDown() {
   const me = useAppSelector((store) => store.me.data);
 
-  const dispatch = useAppDispatch();
-  let click = () => {
-    dispatch(changeLogin(true));
-  };
-
   return (
-    <div>
-      {me.username && (
-        <PulldownStyle className="menuInner" to={`/user/me/${me.username}`}>
-          个人中心
-        </PulldownStyle>
-      )}
-    </div>
+    <Container>
+      <PulldownStyle className="menuInner" to={`/user/me/${me.username}`}>
+        个人中心
+      </PulldownStyle>
+      <Divider />
+      <PulldownStyle className="menuInner" to={`/user/me/${me.username}`}>
+        我的团队
+      </PulldownStyle>
+      <Divider />
+      <PulldownStyle className="menuInner" to={`/user/me/${me.username}`}>
+        我的收藏
+      </PulldownStyle>
+      <Divider />
+      <PulldownStyle className="menuInner" to={`/user/me/${me.username}`}>
+        我的志愿
+      </PulldownStyle>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-gap: 0.8rem;
+`;
+
 const PulldownStyle = styled(Link)`
-  color: transparent;
+  color: black;
+  font-family: ABeeZee;
+`;
+
+const Divider = styled.div`
+  width: 150%;
+  background-color: #c0c0c0;
+  height: 1px;
 `;

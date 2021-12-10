@@ -20,13 +20,15 @@ export default function Login() {
   const dispatch = useAppDispatch();
 
   const onFinish = (values: any) => {
-    userLogin(values)
-      .then((e) => {
-        const res=e.data;
-        dispatch(updateMe(res));
-        dispatch(changeLogin(false));
-      })
-      .catch((err) => seterror(err.message));
+    // userLogin(values)
+    //   .then((e) => {
+    //     const res=e.data;
+    //     dispatch(updateMe(res));
+    //     dispatch(changeLogin(false));
+    //   })
+    //   .catch((err) => seterror(err.message));
+      dispatch(updateMe(values));
+      dispatch(changeLogin(false));
   };
 
   return (

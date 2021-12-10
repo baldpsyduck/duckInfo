@@ -1,5 +1,4 @@
-export const markdown = `
-Here is some js code:
+export const markdown = `Here is some js code:
 ~~~js
 console.log('It works!')
 ~~~
@@ -15,7 +14,7 @@ A paragraph with *emphasis* and **strong importance**.
   * [ ] todo
     * [ ] todo
 * [x] done
-
+$123_2$
 A table:
 
 | 左对齐 | 右对齐 | 居中对齐 |

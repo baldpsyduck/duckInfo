@@ -51,7 +51,7 @@ export const ShowMD = (props: React.HTMLProps<HTMLDivElement>) => {
             );
           },
         }}
-        remarkPlugins={[remarkGfm, remarkMath]}
+        remarkPlugins={[remarkGfm]}
       />
     </Container>
   );
