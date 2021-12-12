@@ -40,7 +40,7 @@ const PulldownStyle = styled(Link)`
 `;
 
 const Divider = styled.div`
-  width: 150%;
+  width: 130%;
   background-color: #c0c0c0;
   height: 1px;
 `;

@@ -8,6 +8,7 @@ import userListReducer from './features/userListSlice';
 import projectReducer from './features/projectSlice';
 import userReducer from './features/userSlice';
 import topReducer from './features/topSlice';
+import infoWReducer from './features/infoWSlice';
 
 const store = configureStore({
     reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
         project: projectReducer,
         user:userReducer,
         top:topReducer,
+        infoW:infoWReducer
     },
 }); 
 

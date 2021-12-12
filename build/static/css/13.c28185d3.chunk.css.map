@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/pages/User/user.css"],"names":[],"mappings":"AAAA,UACE,WAAY,CACZ,cAAiB,CACjB,eACF","file":"13.c28185d3.chunk.css","sourcesContent":[".userPage {\r\n  height: 100%;\r\n  padding: 0px 30px;\r\n  overflow-y: auto;\r\n}\r\n"]}
