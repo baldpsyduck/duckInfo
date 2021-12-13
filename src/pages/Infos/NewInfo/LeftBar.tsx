@@ -3,6 +3,8 @@ import { Switch, Input, Button } from "antd";
 import UpIMG from "components/UpIMG/UpIMG";
 import { LeftOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import { useAppDispatch,useAppSelector } from "store/hooks";
+import { updateBackground } from "store/features/infoWSlice";
 
 export default function LeftBar({
   settitle,
@@ -17,6 +19,9 @@ export default function LeftBar({
 }) {
   const [rotate, setrotate] = useState<boolean>(false);
 
+  const dispatch = useAppDispatch();
+  const {background,showPic,title}=useAppSelector(store=>store.infoW)
+
   return (
     <>
       <ContainerStyle />
@@ -25,7 +30,7 @@ export default function LeftBar({
           <ShowBtn
             onClick={() => {
               setrotate(!rotate);
-              console.log(rotate);
+              return false;
             }}
           >
             <IconContainer className={rotate ? "active" : ""}>
@@ -37,6 +42,7 @@ export default function LeftBar({
           onChange={(e) => {
             settitle(e.target.value);
           }}
+          defaultValue={title}
           placeholder="请输入文章标题"
         />
         <BtnContainer>
@@ -48,8 +54,17 @@ export default function LeftBar({
             defaultChecked
           />
         </BtnContainer>
-        <UpIMG desText="请上传展示图片" />
-        <UpIMG desText="请上传背景图片" />
+        <UpIMG defaultValue={showPic} desText="请上传展示图片" />
+        <UpIMG
+        defaultValue={background}
+          imgFunc={(e) => {
+            dispatch(updateBackground(e));
+          }}
+          delFunc={() => {
+            dispatch(updateBackground(""));
+          }}
+          desText="请上传背景图片"
+        />
         <BottomBtn>
           <Button>提交</Button>
           <Button

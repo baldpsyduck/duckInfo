@@ -21,7 +21,15 @@ export default function UserPullDown() {
       </PulldownStyle>
       <Divider />
       <PulldownStyle className="menuInner" to={`/user/me/${me.username}`}>
+        草稿箱
+      </PulldownStyle>
+      <Divider />
+      <PulldownStyle className="menuInner" to={`/user/me/${me.username}`}>
         我的志愿
+      </PulldownStyle>
+      <Divider />
+      <PulldownStyle className="menuInner" to={`/user/me/${me.username}`}>
+        退出登录
       </PulldownStyle>
     </Container>
   );
@@ -35,7 +43,7 @@ const Container = styled.div`
 `;
 
 const PulldownStyle = styled(Link)`
-  color: black;
+  color: #6a6f7b;
   font-family: ABeeZee;
 `;
 

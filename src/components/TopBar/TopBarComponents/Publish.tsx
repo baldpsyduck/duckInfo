@@ -12,17 +12,9 @@ export default function Publish() {
   const me = useAppSelector((store) => store.me.data);
 
   return (
-    <>
-      {me.username ? (
-        <LinkC to="/infos/new">
-          <Container>发布通知</Container>
-        </LinkC>
-      ) : (
-        <button onClick={()=>{dispatch(changeLogin(true))}}>
-          <Container>发布通知</Container>
-        </button>
-      )}
-    </>
+      <LinkC to="/infos/new">
+        <Container>发布通知</Container>
+      </LinkC>
   );
 }
 
@@ -32,6 +24,6 @@ const Container = styled.div`
   color: white;
 `;
 
-const LinkC=styled(Link)`
-  height:100%;
-`
+const LinkC = styled(Link)`
+  height: 100%;
+`;

@@ -4,7 +4,7 @@ import "braft-editor/dist/index.css";
 import { nanoid } from "nanoid";
 import { data as inidata } from "config/info";
 import { message } from "antd";
-import {useAppDispatch} from 'store/hooks';
+import {useAppDispatch,useAppSelector} from 'store/hooks';
 import {updateData} from 'store/features/infoWSlice';
 
 import { useEffect, useMemo, useState } from "react";
@@ -32,12 +32,12 @@ interface TextRTypes {
 export const TextW = (props: TextRTypes) => {
 
   const dispatch = useAppDispatch();
+  const inidata=useAppSelector(store=>store.infoW.data)
 
   const { title, needTitle } = props;
 
   const [data, setdata] = useState(inidata);
   const [flag, setflag] = useState(false);
-
   useMemo(() => {
     setflag(true);
     if (needTitle) {
@@ -45,11 +45,11 @@ export const TextW = (props: TextRTypes) => {
       const reg = new RegExp(
         `^<h[0-9][^>]*>(<[^>]*>)*${title}(</[^>]*>)*</h[0-9]>`
       );
-      const tit = new RegExp(`^<h[0-9][^>]*>(<[^>]*>)*.*(</[^>]*>)*</h[0-9]>`);
-      const content = data.split(tit);
+      
+      const tit = new RegExp(`^(<h[0-9][^>]*>(<[^>]*>)*)([^<]*)((</[^>]*>)*</h[0-9]>)`);
       title &&
         data.search(reg) === -1 &&
-        setdata(head + content[content.length - 1]);
+        setdata(data.replace(tit,`$1${title}$4`));
     } else {
       const tit = new RegExp(`^<h[0-9][^>]*>(<[^>]*>)*.*(</[^>]*>)*</h[0-9]>`);
       const content = data.split(tit);
@@ -74,7 +74,7 @@ export const TextW = (props: TextRTypes) => {
           value={flag && BraftEditor.createEditorState(data)}
           onChange={handleEditorChange}
           onSave={submitContent}
-          defaultValue={BraftEditor.createEditorState(inidata)}
+          defaultValue={BraftEditor.createEditorState(data)}
           className="editor"
           contentClassName="editorC"
           controlBarClassName="editorB"

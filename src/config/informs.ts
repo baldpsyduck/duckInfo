@@ -1,4 +1,4 @@
-import { informs as informsType, cardInfo } from "types/informs";
+import { informs as informsType, cardInfo } from "types/inform";
 
 export const informs: informsType = [
   {

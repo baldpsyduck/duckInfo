@@ -1,5 +1,5 @@
 Arguments: 
-  D:\node.js\node.exe D:\nodejs\node_global\node_modules\yarn\bin\yarn.js add @types/react-uuid --save-edv
+  D:\node.js\node.exe D:\nodejs\node_global\node_modules\yarn\bin\yarn.js add @types/querystring
 
 PATH: 
   D:\jdk\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;D:\VMware\bin\;D:\oracle\WINDOWS.X64_193000_db_home\bin;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;D:\anaconda;D:\anaconda\Library\mingw-w64\bin;D:\anaconda\Library\usr\bin;D:\anaconda\Library\bin;D:\anaconda\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\matlab\bin;D:\MinGW\mingw64\bin;D:\node.js\;D:\nodejs\node_global;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files (x86)\Autodesk\Backburner\;C:\Program Files\dotnet\;D:\NETSARANG\Xftp\;D:\NETSARANG\Xshell\;D:\Cmake\bin;D:\Git\cmd;D:\SDUicloud;"D:\java\bin;D:\java\jre\bin";D:\maven\apache-maven-3.8.4-bin\apache-maven-3.8.4\bin;C:\Users\16044\AppData\Local\Microsoft\WindowsApps;D:\Microsoft VS Code\bin;D:\clion\CLion 2020.3.2\bin;C:\Users\16044\AppData\Roaming\npm;D:\jetBrains\PyCharm\PyCharm Community Edition 2020.3.3\bin;D:\jetBrains\pyCharm(pro)\PyCharm 2020.3.3\bin;C:\Users\16044\.dotnet\tools;D:\jetBrains\WebStorm 2021.1\bin;D:\latex\2021\bin\win32;D:\graphviz\bin;D:\java;D:\intelliJ _DEA\IntelliJ IDEA 2021.2.3\bin
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.npmjs.org/@types%2freact-uuid: Not found
+  Error: https://registry.npmjs.org/@types%2fquerystring: Not found
       at Request.params.callback [as _callback] (D:\nodejs\node_global\node_modules\yarn\lib\cli.js:66988:18)
       at Request.self.callback (D:\nodejs\node_global\node_modules\yarn\lib\cli.js:140662:22)
       at Request.emit (events.js:315:20)
@@ -43,6 +43,7 @@ npm manifest:
       "@testing-library/user-event": "^12.1.10",
       "@types/axios": "^0.14.0",
       "@types/jest": "^27.0.3",
+      "@types/nanoid": "^3.0.0",
       "@types/node": "^16.11.9",
       "@types/react-addons-css-transition-group": "^15.0.6",
       "@types/react-cookies": "^0.1.0",
@@ -79,7 +80,6 @@ npm manifest:
       "react-svg": "^13.0.6",
       "react-syntax-highlighter": "^15.4.5",
       "react-transition-group": "^4.4.2",
-      "react-uuid": "^1.0.2",
       "redux-thunk": "^2.3.0",
       "rehype-katex": "^6.0.2",
       "remark-gfm": "^3.0.1",
@@ -2398,6 +2398,13 @@ Lockfile:
     version "0.7.31"
     resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
     integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
+  
+  "@types/nanoid@^3.0.0":
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/@types/nanoid/-/nanoid-3.0.0.tgz#c757b20f343f3a1dd76e80a9a431b6290fc20f35"
+    integrity sha512-UXitWSmXCwhDmAKe7D3hNQtQaHeHt5L8LO1CB8GF8jlYVzOv5cBWDNqiJ+oPEWrWei3i3dkZtHY/bUtd0R/uOQ==
+    dependencies:
+      nanoid "*"
   
   "@types/node@*":
     version "14.14.31"
@@ -9764,6 +9771,11 @@ Lockfile:
     dependencies:
       big-integer "^1.6.16"
   
+  nanoid@*:
+    version "3.1.30"
+    resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.30.tgz#63f93cc548d2a113dc5dfbc63bfa09e2b9b64362"
+    integrity sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ==
+  
   nanoid@^3.1.20:
     version "3.1.20"
     resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.1.20.tgz"
@@ -12332,11 +12344,6 @@ Lockfile:
       dom-helpers "^5.0.1"
       loose-envify "^1.4.0"
       prop-types "^15.6.2"
-  
-  react-uuid@^1.0.2:
-    version "1.0.2"
-    resolved "https://registry.yarnpkg.com/react-uuid/-/react-uuid-1.0.2.tgz#c77cea91cf38eafb1aaa7910f92621b2ed91b969"
-    integrity sha512-5e0GM16uuQj9MdRJlZ0GdLC8LKMwpU9PIqYmF27s3fIV2z+rLyASTaiW4aKzSY4DyGanz+ImzsECkftwGWfAwA==
   
   react@^17.0.2:
     version "17.0.2"

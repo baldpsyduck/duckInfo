@@ -1,24 +1,28 @@
 import {createSlice,PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '..';
-import { createBrowserHistory } from "history";
+import {info} from 'types/inform'
 
-interface InfoWSlice{
-    data: string;
-    background: string;
-}
-
-const initialState:InfoWSlice={
+const initialState:info={
     data:"",
     background:"",
+    title:"",
+    authID:"",
+    permittedID:[],
+    showPic:"",
+    id:"",
 }
 
 const infoWSlice=createSlice({
     name: 'infos',
     initialState,
     reducers:{
-        updateInfoW:(state,action:PayloadAction<InfoWSlice>)=>{
+        updateInfoW:(state,action:PayloadAction<info>)=>{
             state.data=action.payload.data;
             state.background=action.payload.background;
+            state.title=action.payload.title;
+            state.authID=action.payload.authID;
+            state.permittedID=action.payload.permittedID;
+            state.id=action.payload.id;
         },
         updateBackground:(state,action:PayloadAction<string>)=>{
             state.background=action.payload;

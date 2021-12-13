@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import InfoCard from "components/InfoCard";
-import {cardInfo} from 'types/informs';
+import {cardInfo} from 'types/inform';
 
 
 export default function Data({
