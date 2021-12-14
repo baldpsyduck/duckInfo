@@ -12,7 +12,7 @@ export default function Data({
   return (
     <Container id={`calPage${data.date}`} >
       <Title>{date.replace("/", "年") + "月"}</Title>
-      <CardContainer>
+      <CardContainer> 
         {info.map((i) => {
           return <InfoCard info={i.info}/>;
         })}

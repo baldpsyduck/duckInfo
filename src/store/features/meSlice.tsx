@@ -8,6 +8,7 @@ const initialState: { data: userType } = {
     username: "",
     authority: 0,
     email: "",
+    avatar: "",
   },
 };
 
@@ -24,9 +25,12 @@ const meSlice = createSlice({
     updateUsername: (state, action: PayloadAction<string>) => {
       state.data.username = action.payload;
     },
+    updateAvatar: (state, action: PayloadAction<string>)=>{
+      state.data.avatar = action.payload;
+    }
   },
 });
 
-export const { updateMe, updateID, updateUsername } = meSlice.actions;
+export const { updateMe, updateID, updateUsername,updateAvatar } = meSlice.actions;
 export const me = (state: RootState) => state.me;
 export default meSlice.reducer;

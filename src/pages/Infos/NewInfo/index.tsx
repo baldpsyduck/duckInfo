@@ -5,7 +5,7 @@ import LeftBar from "./LeftBar";
 import Preview from "./Preview";
 import { CSSTransition } from "react-transition-group";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { updateInfoW } from "store/features/infoWSlice";
+import { updateInfoW,updateAuthID } from "store/features/infoWSlice";
 import { Result } from "antd";
 import { RouteComponentProps } from "react-router";
 import qs from "querystring";
@@ -29,7 +29,7 @@ export default function NewInfo(props: TextWProps) {
 
   useMemo(() => {
     if (!id) {
-      dispatch(updateInfoW({ id: "", title: "", authID: "", data: "" }));
+      dispatch(updateInfoW({ id: "", title: "", authID: "", data: "",start:"",end:"" }));
       settitle("");
     }
     setpermit(me === auth);
@@ -58,7 +58,7 @@ export default function NewInfo(props: TextWProps) {
                   setneedTitle={setneedTitle}
                   settitle={settitle}
                 />
-                <TextW needTitle={needTitle} title={title} />
+                <TextW onChange={()=>{dispatch(updateAuthID(me))}} needTitle={needTitle} title={title} />
               </Container>
             </>
           ) : (

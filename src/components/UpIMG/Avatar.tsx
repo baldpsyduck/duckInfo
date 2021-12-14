@@ -3,42 +3,39 @@ import { HTMLProps, useState } from "react";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { basicColor } from "config/color";
 import { nanoid } from "nanoid";
+import avatar from "assets/img/logo.png";
+import {useAppSelector} from 'store/hooks';
 
 interface UpIMGProps extends HTMLProps<HTMLDivElement> {
   desText?: string;
   imgFunc?: (e: string) => void;
-  delFunc?: () => void;
   defaultValue?: string;
 }
 
-export default function UpIMG(props: UpIMGProps) {
+export default function Avatar(props: UpIMGProps) {
   const inputID = nanoid();
-  const {
-    className,
-    id,
-    style,
-    desText: text,
-    imgFunc,
-    delFunc,
-    defaultValue,
-  } = props;
+
+  const { className, id, desText: text, imgFunc} = props;
+  const iniavatar=useAppSelector(store=>store.me.data.avatar)
+
   const [IMGUrl, setIMGUrl] = useState<string>(
-    defaultValue ? defaultValue : ""
+    iniavatar ? iniavatar : avatar
   );
+
+  const Background = styled.div`
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  `;
 
   return (
     <Container className={"UpIMGbackC " + className} id={id}>
       <Upper className={IMGUrl === "" ? "" : "Upper"}>
-        <button
-          onClick={() => {
-            const input: any = document.getElementById(inputID);
-            input.value = "";
-            setIMGUrl("");
-            if (delFunc) delFunc();
-            return false;
-          }}
-        >
-          <DeleteOutlined />
+        <button>
+          <PlusOutlined />
+          <span>更换头像</span>
         </button>
       </Upper>
       <Input
@@ -59,7 +56,7 @@ export default function UpIMG(props: UpIMGProps) {
         }}
         type="file"
       />
-      <Background style={style}>
+      <Background>
         {
           <>
             <IMG src={IMGUrl} />
@@ -86,14 +83,7 @@ const Input = styled.input`
 const IMG = styled.img`
   position: absolute;
   width: 100%;
-`;
-
-const Background = styled.div`
-  height: 10rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
 `;
 
 const Upper = styled.div`
@@ -127,6 +117,7 @@ const Container = styled.div`
       z-index: 9999;
       position: absolute;
       transition: 300ms;
+      pointer-events: none;
     }
   }
 `;

@@ -2,16 +2,12 @@ import styled from "@emotion/styled";
 import { Spin, Card, Result, Button } from "antd";
 import CommentList from "components/CommentList";
 import { Profile } from "./Profile";
-import { RecentProjects } from "./RecentProjects";
 import { AboutMe } from "./AboutMe";
 import { userGetUser } from "api";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { updateUser } from "store/features/userSlice";
 import { useMemo, useState } from "react";
 import { useHistory } from "react-router";
-import { comments } from "config/comments";
-import { fetchHttp } from "utils/http";
-import Axios  from "axios";
 
 export default function PersonalCenter(props: any) {
   const dispatch = useAppDispatch();
@@ -43,6 +39,7 @@ export default function PersonalCenter(props: any) {
   }, [username]);
 
   const user = useAppSelector((store) => store.user.data);
+  const me = useAppSelector((store) => store.me.data);
 
   return (
     <>
@@ -68,22 +65,19 @@ export default function PersonalCenter(props: any) {
             <Profile user={user} />
           </ProfileContainer>
           <ProjectContainer size={"small"}>
-            <RecentProjects projectProps={user.projects || []} />
           </ProjectContainer>
           <AboutMeContainer size={"small"}>
             <AboutMe
               description={user.description || ""}
               authority={user.authority}
+              isMe={user.username===me.username}
             />
           </AboutMeContainer>
-          <NewsContainer size={"small"}>
-            <CommentList comments={user.comments || []} />
-          </NewsContainer>
         </Container>
       )}
     </>
   );
-}
+} 
 
 const Container = styled.div`
   display: grid;
@@ -91,8 +85,8 @@ const Container = styled.div`
   grid-template-rows: 24rem 16rem 1fr;
   grid-template-areas:
     "profile project"
-    "profile news"
-    "aboutme news";
+    "profile project"
+    "aboutme project";
   grid-gap: 3rem;
   height: 96%;
   margin-top: 30px;
@@ -108,17 +102,9 @@ const CardWithTopBorder = styled(Card)`
 
 const ProjectContainer = styled(CardWithTopBorder)`
   grid-area: project;
+  overflow: auto;
 `;
 
 const AboutMeContainer = styled(CardWithTopBorder)`
   grid-area: aboutme;
-`;
-
-const NewsContainer = styled(CardWithTopBorder)`
-  overflow-y: auto;
-  grid-area: news;
-  padding: 4px;
-  font-size: 4rem;
-  color: #c0c0c0;
-  overflow-y: scrol;
 `;

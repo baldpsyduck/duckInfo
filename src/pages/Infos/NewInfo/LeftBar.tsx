@@ -1,10 +1,21 @@
 import styled from "@emotion/styled";
-import { Switch, Input, Button } from "antd";
-import UpIMG from "components/UpIMG/UpIMG";
+import { Switch, Input, Button, DatePicker, TimePicker } from "antd";
+import UpIMG from "components/UpIMG";
 import { LeftOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import { useAppDispatch,useAppSelector } from "store/hooks";
-import { updateBackground } from "store/features/infoWSlice";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import {
+  updateBackground,
+  updateTitle,
+  updateShowPic,
+} from "store/features/infoWSlice";
+import { updateDate } from "store/features/infoWSlice";
+import moment from "moment";
+import "./LeftBar.css";
+
+const { RangePicker } = DatePicker;
+
+const dateFormat = "YYYY/MM/DD";
 
 export default function LeftBar({
   settitle,
@@ -20,7 +31,14 @@ export default function LeftBar({
   const [rotate, setrotate] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
-  const {background,showPic,title}=useAppSelector(store=>store.infoW)
+  const iniinfo = useAppSelector((store) => store.infoW);
+  const { background, showPic, title, start, end } = iniinfo;
+
+  useEffect(() => {
+    dispatch(
+      updateDate([moment().format(dateFormat), moment().format(dateFormat)])
+    );
+  }, []);
 
   return (
     <>
@@ -41,6 +59,7 @@ export default function LeftBar({
         <Input
           onChange={(e) => {
             settitle(e.target.value);
+            dispatch(updateTitle(e.target.value));
           }}
           defaultValue={title}
           placeholder="请输入文章标题"
@@ -54,9 +73,15 @@ export default function LeftBar({
             defaultChecked
           />
         </BtnContainer>
-        <UpIMG defaultValue={showPic} desText="请上传展示图片" />
         <UpIMG
-        defaultValue={background}
+          defaultValue={showPic}
+          desText="请上传展示图片"
+          imgFunc={(e) => {
+            dispatch(updateShowPic(e));
+          }}
+        />
+        <UpIMG
+          defaultValue={background}
           imgFunc={(e) => {
             dispatch(updateBackground(e));
           }}
@@ -64,6 +89,24 @@ export default function LeftBar({
             dispatch(updateBackground(""));
           }}
           desText="请上传背景图片"
+        />
+        <span>活动开始/结束日期</span>
+        <TimeChooser
+          className="myTimeChoose"
+          defaultValue={
+            start && end
+              ? [moment(start, dateFormat), moment(end, dateFormat)]
+              : [moment(moment(), dateFormat), moment(moment(), dateFormat)]
+          }
+          onChange={(e) => {
+            e &&
+              dispatch(
+                updateDate([
+                  (e[0] || moment()).format(dateFormat),
+                  (e[1] || moment()).format(dateFormat),
+                ])
+              );
+          }}
         />
         <BottomBtn>
           <Button>提交</Button>
@@ -81,6 +124,12 @@ export default function LeftBar({
     </>
   );
 }
+
+const TimeChooser = styled(RangePicker)`
+  input {
+    font-size: 0.3rem;
+  }
+`;
 
 const BottomBtn = styled.div`
   width: 100%;
@@ -130,7 +179,8 @@ const IconContainer = styled.div`
 `;
 
 const Container = styled.div`
-  height: 38rem;
+  height: 50rem;
+  width: 20rem;
   transition: 500ms;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -140,9 +190,8 @@ const Container = styled.div`
   padding: 2rem;
   position: fixed;
   border: 1px solid #c0c0c0;
-  width: 20rem;
   border-radius: 0 5px 5px 0;
-  margin-top: -19rem;
+  margin-top: -25rem;
   background-color: white;
   left: 0;
   top: 50%;

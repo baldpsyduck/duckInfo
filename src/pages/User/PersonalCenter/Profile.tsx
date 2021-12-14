@@ -1,57 +1,75 @@
-import { Avatar, Button, Divider, Tag } from "antd";
+import { Button, Divider, Tag } from "antd";
 import styled from "@emotion/styled";
 import { MailOutlined } from "@ant-design/icons";
-import {user} from 'types/user';
+import { user } from "types/user";
+import Avatar from "components/UpIMG/Avatar";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { updateAvatar } from "store/features/meSlice";
+import defaultAvatar from 'assets/img/logo.png'
 
-export const Profile = ({user}:{user:user}) => {
+export const Profile = ({ user }: { user: user }) => {
 
-  const {avatar,username,email,projects,tags}=user
+  const { avatar, username, email, infos } = user;
+  const mename = useAppSelector((store) => store.me.data.username);
+  const dispatch = useAppDispatch();
 
   return (
     <>
-    <Container>
-      <Avatar
-        size={128}
-        src={<img src={avatar} alt={"UserAvatar"} />}
-      />
-      <Title>{username}</Title>
-      <SubTitle>
-        <MailOutlined />
-        <EmailButton
-          type={"text"}
-          size={"small"}
-          href={`mailto:${email}`}
-          ghost
-        >
-          {email}
-        </EmailButton>
-      </SubTitle>
-      <ProjectSummary>
-        <ProjectSummaryBlock>
-          <ProjectSummaryNumber>{projects?.length}</ProjectSummaryNumber>
-          <ProjectSummaryText>参与项目</ProjectSummaryText>
-        </ProjectSummaryBlock>
-        <ProjectSummaryBlock>
-          <ProjectSummaryNumber>4.4w</ProjectSummaryNumber>
-          <ProjectSummaryText>项目点赞</ProjectSummaryText>
-        </ProjectSummaryBlock>
-      </ProjectSummary>
-      <DividerInProfile />
-      <div>
-        {
-          tags&&tags.map(tag =>{
-            <TagInProfile color={"red"}>{tag}</TagInProfile>
-          })
-        }
-      </div>
-    </Container> 
+      <Container>
+        <Acontainer>
+          {mename === username ? (
+            <Avatar
+              imgFunc={(e) => {
+                dispatch(updateAvatar(e));
+              }}
+              desText="点击上传头像"
+              style={{ width: "20rem" }}
+            />
+          ) : (
+            <AvatarIMG src={avatar||defaultAvatar} />
+          )}
+        </Acontainer>
+        <Title>{username}</Title>
+        <SubTitle>
+          <MailOutlined />
+          <EmailButton
+            type={"text"}
+            size={"small"}
+            href={`mailto:${email}`}
+            ghost
+          >
+            {email}
+          </EmailButton>
+        </SubTitle>
+        <ProjectSummary>
+          <ProjectSummaryBlock>
+            <ProjectSummaryNumber>{infos?.length||0}</ProjectSummaryNumber>
+            <ProjectSummaryText>活动文章</ProjectSummaryText>
+          </ProjectSummaryBlock>
+          <ProjectSummaryBlock>
+            <ProjectSummaryNumber>0</ProjectSummaryNumber>
+            <ProjectSummaryText>活动收藏</ProjectSummaryText>
+          </ProjectSummaryBlock>
+        </ProjectSummary>
+        <DividerInProfile />
+      </Container>
     </>
   );
 };
 
+const AvatarIMG=styled.img`
+  width:100%;
+  height:100%
+`
+
+const Acontainer = styled.div`
+  width: 20rem;
+  height: 20rem;
+`;
+
 const Container = styled.div`
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;

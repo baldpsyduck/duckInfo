@@ -103,13 +103,13 @@ export default function App() {
                 {homeInfos.map((info) => {
                   return (
                     <div>
-                      <h3 style={contentStyle}>{info.key}</h3>
+                      <h3 style={contentStyle}>{info.id}</h3>
                     </div>
                   );
                 })}
               </Carousel>
             </div>
-          </CSSTransition>
+          </CSSTransition>  
         </TransationContainer>
 
         {login.chooseLogin && (

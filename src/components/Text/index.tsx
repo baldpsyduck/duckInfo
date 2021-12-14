@@ -4,8 +4,8 @@ import "braft-editor/dist/index.css";
 import { nanoid } from "nanoid";
 import { data as inidata } from "config/info";
 import { message } from "antd";
-import {useAppDispatch,useAppSelector} from 'store/hooks';
-import {updateData} from 'store/features/infoWSlice';
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { updateData } from "store/features/infoWSlice";
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -27,14 +27,14 @@ TextR.defaultPrpos = {
 interface TextRTypes {
   title?: string;
   needTitle?: boolean;
+  onChange?: (e:any) => void;
 }
 
 export const TextW = (props: TextRTypes) => {
-
   const dispatch = useAppDispatch();
-  const inidata=useAppSelector(store=>store.infoW.data)
+  const inidata = useAppSelector((store) => store.infoW.data);
 
-  const { title, needTitle } = props;
+  const { title, needTitle, onChange } = props;
 
   const [data, setdata] = useState(inidata);
   const [flag, setflag] = useState(false);
@@ -45,22 +45,27 @@ export const TextW = (props: TextRTypes) => {
       const reg = new RegExp(
         `^<h[0-9][^>]*>(<[^>]*>)*${title}(</[^>]*>)*</h[0-9]>`
       );
-      
-      const tit = new RegExp(`^(<h[0-9][^>]*>(<[^>]*>)*)([^<]*)((</[^>]*>)*</h[0-9]>)`);
+
+      const tit = new RegExp(
+        `^(<h[0-9][^>]*>(<[^>]*>)*)([^<]*)((</[^>]*>)*</h[0-9]>)`
+      );
+      const content = data.split(tit);
       title &&
         data.search(reg) === -1 &&
-        setdata(data.replace(tit,`$1${title}$4`));
+        setdata(data.replace(tit, `$1${title}$4`));
+      data.search(tit) === -1 && setdata(head + content[content.length - 1]);
     } else {
       const tit = new RegExp(`^<h[0-9][^>]*>(<[^>]*>)*.*(</[^>]*>)*</h[0-9]>`);
       const content = data.split(tit);
       setdata(content[content.length - 1]);
     }
-  }, [title,needTitle]);
+  }, [title, needTitle]);
 
   const handleEditorChange = (e: any) => {
     setflag(false);
     setdata(e.toHTML());
     dispatch(updateData(e.toHTML()));
+    if (onChange) onChange(e);
   };
 
   const submitContent = (e: any) => {
@@ -92,7 +97,7 @@ TextW.defaultPrpos = {
 const Container = styled.div`
   border: 1px solid #c0c0c0;
   border-radius: 5px;
-  height:75vh;
+  height: 75vh;
   .editor {
     overflow-y: hidden;
     overflow-x: hidden;

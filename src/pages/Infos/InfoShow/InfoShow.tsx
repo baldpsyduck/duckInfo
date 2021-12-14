@@ -9,17 +9,26 @@ import { updateInfoW } from "store/features/infoWSlice";
 
 export default function InfoShow() {
   const username = useAppSelector((store) => store.me.data.username);
-  const { authID, data, background, id } = info;
+  const { authID, data, background, id, title, showPic, start, end } = info;
   const dispatch = useAppDispatch();
 
   return (
     <Container>
       <RightBar>
         <Couple>
+          <ShowIMG src={showPic} alt="" />
+          <span>{title}</span>
+        </Couple>
+        <Couple>
           <MyLink to={`/user/me/${authID}`}>
             <Avatar />
           </MyLink>
           <MyLink to={`/user/me/${authID}`}>{authID}</MyLink>
+        </Couple>
+        <Couple>
+          <span>活动日期:</span>
+          <span>{start + "-" }</span>
+          <span>{end}</span>
         </Couple>
         <Couple>
           <Star>
@@ -42,6 +51,11 @@ export default function InfoShow() {
   );
 }
 
+const ShowIMG = styled.img`
+  width: 100%;
+  border-radius: 5px;
+`;
+
 const MyLink = styled(Link)`
   color: black;
   :hover {
@@ -54,6 +68,7 @@ const Couple = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: ABeeZee;
 `;
 
 const Star = styled.button`
@@ -68,8 +83,8 @@ const Avatar = styled.div`
 `;
 
 const RightBar = styled.div`
-  width: 10rem;
-  margin-top: -12.5rem;
+  width: 12rem;
+  margin-top: -20rem;
   border: 1px solid #c0c0c0;
   position: absolute;
   right: 0;

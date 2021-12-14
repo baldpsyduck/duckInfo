@@ -1,6 +1,6 @@
 export type cardInfo = {
   info: string;
-  key: string;
+  id: string;
 };
 
 export type informs = Array<{
@@ -11,9 +11,17 @@ export type informs = Array<{
 export type info={
   id:string;
   title: string;
+  start:string;
+  end:string;
   background?: string;
   authID:string;
   data:string;
   showPic?:string;
   permittedID?:Array<string>;
 }
+
+export type infos=Array<{
+  id:string;
+  showPic?:string;
+  title?:string;
+}>

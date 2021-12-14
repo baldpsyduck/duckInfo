@@ -1,7 +1,6 @@
 import Loading from "pages/Loading";
 import { lazy, Suspense } from "react";
 import { Redirect, Route, Switch } from "react-router";
-import { testCardInfo } from "config/userCard";
 import { templateUser } from "config/user";
 
 import "./user.css";

@@ -1,10 +1,13 @@
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { changeLogin } from "store/features/loginSlice";
+import { updateMe } from "store/features/meSlice";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { basicColor } from "config/color";
 
 export default function UserPullDown() {
   const me = useAppSelector((store) => store.me.data);
+  const dispatch = useAppDispatch();
 
   return (
     <Container>
@@ -28,9 +31,22 @@ export default function UserPullDown() {
         我的志愿
       </PulldownStyle>
       <Divider />
-      <PulldownStyle className="menuInner" to={`/user/me/${me.username}`}>
+      <ExitBtn
+        onClick={() => {
+          dispatch(
+            updateMe({
+              SESSIONID: "",
+              username: "",
+              authority: 0,
+              email: "",
+              avatar: "",
+            })
+          );
+        }}
+        className="menuInner"
+      >
         退出登录
-      </PulldownStyle>
+      </ExitBtn>
     </Container>
   );
 }
@@ -51,4 +67,11 @@ const Divider = styled.div`
   width: 130%;
   background-color: #c0c0c0;
   height: 1px;
+`;
+
+const ExitBtn = styled.button`
+  :hover {
+    transition: 300ms;
+    color: ${basicColor};
+  }
 `;

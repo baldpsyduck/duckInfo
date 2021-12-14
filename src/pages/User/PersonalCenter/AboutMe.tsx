@@ -1,14 +1,45 @@
 import styled from "@emotion/styled";
+import { Button, Input } from "antd";
+import { useState } from "react";
 
-export const AboutMe = ({ description,authority }: { description: string,authority: number}) => {
+const { TextArea } = Input;
+
+export const AboutMe = ({
+  description,
+  authority,
+  isMe,
+}: {
+  description: string;
+  authority: number;
+  isMe: boolean;
+}) => {
+  const [change, setchange] = useState<boolean>(false);
+  const [des, setdes] = useState<string>(description);
 
   return (
     <Container>
       <Title>关于我</Title>
-      <Text>{description}</Text>
-      <UserTagContainer>
-        <UserTag>{authority === 2 ? "行政组" : "成员"}</UserTag>
-      </UserTagContainer>
+      {change ? (
+        <TextArea
+          defaultValue={des}
+          autoSize
+          onBlur={() => {
+            setchange(false);
+          }}
+          onPressEnter={(e) => {
+            setdes(e.currentTarget.value);
+            setchange(false);
+          }}
+        />
+      ) : (
+        <Text
+          onClick={() => {
+            setchange(isMe);
+          }}
+        >
+          {des}
+        </Text>
+      )}
     </Container>
   );
 };
@@ -26,6 +57,7 @@ const Text = styled.div`
   margin: 0.8rem 0.2rem;
   font-size: 1.4rem;
   color: #a0a0a0;
+  word-wrap: break-word;
 `;
 
 const UserTagContainer = styled.div`

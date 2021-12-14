@@ -5,6 +5,7 @@ import UserPullDown from "./UserPullDown";
 import { basicColor } from "config/color";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { changeLogin } from "store/features/loginSlice";
+import avatarUrl from 'assets/img/logo.png'
 
 export default function User() {
   const me = useAppSelector((store) => store.me.data);
@@ -17,24 +18,24 @@ export default function User() {
   return (
     <Container className="user">
       {me.username ? (
-      <>
-        <Message>
-          <BellOutlined />
-        </Message>
-        <Popover
-          placement="topLeft"
-          trigger="click"
-          arrowPointAtCenter
-          content={<UserPullDown />}
-        >
-          <button>
-            <Avatar />
-          </button>
-        </Popover>
-      </>
+        <>
+          <Message>
+            <BellOutlined />
+          </Message>
+          <Popover
+            placement="topLeft"
+            trigger="click"
+            arrowPointAtCenter
+            content={<UserPullDown />}
+          >
+            <AvatarBtn>
+              <Avatar src={`${me.avatar||avatarUrl}`} />
+            </AvatarBtn>
+          </Popover>
+        </>
       ) : (
         <button>
-          <LoginBtn className="headPortrait"  onClick={click}>
+          <LoginBtn className="headPortrait" onClick={click}>
             <span>&nbsp;登&nbsp;录&nbsp;</span>
           </LoginBtn>
         </button>
@@ -44,18 +45,18 @@ export default function User() {
 }
 
 const Container = styled.div`
-width:10rem;
-display:flex;
-justify-content:space-between;
-align-items:center;
+  width: 10rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Message = styled.button`
   color: white;
   display: flex;
-  justify-content:center;
-  align-items:center;
-  font-size:2.8rem;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.8rem;
 `;
 
 const LoginBtn = styled.div`
@@ -64,9 +65,16 @@ const LoginBtn = styled.div`
   color: ${basicColor};
 `;
 
-const Avatar = styled.div`
+const Avatar = styled.img`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+`;
+
+const AvatarBtn = styled.button`
   width: 4rem;
   height: 4rem;
   background-color: gray;
   border-radius: 4rem;
+  overflow: hidden;
 `;
