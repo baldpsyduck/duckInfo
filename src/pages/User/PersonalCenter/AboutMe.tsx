@@ -23,7 +23,8 @@ export const AboutMe = ({
         <TextArea
           defaultValue={des}
           autoSize
-          onBlur={() => {
+          onBlur={(e) => {
+            setdes(e.currentTarget.value);
             setchange(false);
           }}
           onPressEnter={(e) => {
