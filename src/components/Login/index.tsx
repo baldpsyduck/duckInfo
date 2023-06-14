@@ -10,32 +10,31 @@ import { updateMe } from "store/features/meSlice";
 import { changeLogin } from "store/features/loginSlice";
 import "./Login.css";
 import styled from "@emotion/styled";
-
-import cookie from 'react-cookies'
 import { userLogin } from "api";
+import { basicColor } from "config/color";
+import Forget from "./Forget";
 
 export default function Login() {
   const [error, seterror] = useState("");
+  const [forget, setforget] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
   const onFinish = (values: any) => {
-    // userLogin(values)
-    //   .then((e) => {
-    //     const res=e.data;
-    //     dispatch(updateMe(res));
-    //     dispatch(changeLogin(false));
-    //   })
-    //   .catch((err) => seterror(err.message));
-      dispatch(updateMe(values));
-      dispatch(changeLogin(false));
+    userLogin(values)
+      .then((e) => {
+        const res = e.data;
+        dispatch(updateMe(res));
+        dispatch(changeLogin(false));
+      })
+      .catch((err) => seterror(err.response.data.message));
   };
 
   return (
     <LoginOuter className="loginOuter loginContainer" bubbles={false}>
-      <button className="close" onClick={() => dispatch(changeLogin(false))}>
+      <CloseBtn className="close" onClick={() => dispatch(changeLogin(false))}>
         <CloseOutlined />
-      </button>
+      </CloseBtn>
 
       <div className="form">
         <Logo className="logo" />
@@ -51,7 +50,7 @@ export default function Login() {
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Username"
+              placeholder="用户名"
             />
           </Form.Item>
 
@@ -62,7 +61,7 @@ export default function Login() {
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Password"
+              placeholder="密码"
             />
           </Form.Item>
           {error && <ErrorSpan>{error}</ErrorSpan>}
@@ -70,9 +69,14 @@ export default function Login() {
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>记住我</Checkbox>
             </Form.Item>
-            <Link className="login-form-forgot" to="/home">
+            <ForgetBtn
+              type="button"
+              onClick={() => {
+                setforget(true);
+              }}
+            >
               忘记密码？
-            </Link>
+            </ForgetBtn>
           </Form.Item>
 
           <Form.Item>
@@ -92,12 +96,31 @@ export default function Login() {
           </Form.Item>
         </Form>
       </div>
+
+      <FContainer>
+        <Forget className={forget ? "active" : ""} setback={setforget}/>
+      </FContainer>
     </LoginOuter>
   );
 }
 
+const FContainer = styled.div`
+  .active {
+    width: 100%;
+    transition: 300ms;
+  }
+`;
+
+const CloseBtn = styled.button`
+  z-index: 99;
+`;
+
+const ForgetBtn = styled.button`
+  color: ${basicColor};
+`;
+
 const ErrorSpan = styled.span`
-  color: "red";
+  color: red;
 `;
 
 const LoginOuter = styled(MoveDiv)`

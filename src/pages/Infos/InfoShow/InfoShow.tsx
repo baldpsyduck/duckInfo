@@ -2,52 +2,79 @@ import styled from "@emotion/styled";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { TextR } from "components/Text";
 import { StarOutlined } from "@ant-design/icons";
-import { info } from "config/info";
-import { Button } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Result } from "antd";
+import { Link, RouteComponentProps } from "react-router-dom";
 import { updateInfoW } from "store/features/infoWSlice";
+import { info as infoT } from "types/inform";
+import infoS from "assets/img/info.jpg";
+import { useHistory } from "react-router";
 
-export default function InfoShow() {
+interface ISProps extends RouteComponentProps {}
+
+export default function InfoShow(props: ISProps) {
   const username = useAppSelector((store) => store.me.data.username);
-  const { authID, data, background, id, title, showPic, start, end } = info;
+  const params: any = props.match.params;
+  const infos = useAppSelector((store) => store.infos.data);
+  const info: infoT = infos.filter((info) => {
+    return info.id === params.infoID;
+  })[0];
   const dispatch = useAppDispatch();
+  const history = useHistory();
 
   return (
-    <Container>
-      <RightBar>
-        <Couple>
-          <ShowIMG src={showPic} alt="" />
-          <span>{title}</span>
-        </Couple>
-        <Couple>
-          <MyLink to={`/user/me/${authID}`}>
-            <Avatar />
-          </MyLink>
-          <MyLink to={`/user/me/${authID}`}>{authID}</MyLink>
-        </Couple>
-        <Couple>
-          <span>活动日期:</span>
-          <span>{start + "-" }</span>
-          <span>{end}</span>
-        </Couple>
-        <Couple>
-          <Star>
-            <StarOutlined />
-          </Star>
-          <span>{"收藏"}</span>
-        </Couple>
+    <>
+      {!info?(
+        <Result
+          status="404"
+          title="404"
+          subTitle="当前通知不存在"
+          extra={
+            <Button
+              type="primary"
+              onClick={() => {
+                history.goBack();
+              }}
+            >
+              返回
+            </Button>
+          }
+        />
+      ) :<Container>
+        <RightBar>
+          <Couple>
+            <ShowIMG src={info.showPic || infoS} alt="" />
+            <span>{info.title}</span>
+          </Couple>
+          <Couple>
+            <MyLink to={`/user/me/${info.authID}`}>
+              <Avatar />
+            </MyLink>
+            <MyLink to={`/user/me/${info.authID}`}>{info.authID}</MyLink>
+          </Couple>
+          <Couple>
+            <span>活动日期:</span>
+            <span>{info.start + "-"}</span>
+            <span>{info.end}</span>
+          </Couple>
+          <Couple>
+            <Star>
+              <StarOutlined />
+            </Star>
+            <span>{"收藏"}</span>
+          </Couple>
 
-        {authID === username && (
-          <Button type="primary" onClick={() => dispatch(updateInfoW(info))}>
-            <MyLink to={`/infos/new/?id=${id}`}>修改</MyLink>
-          </Button>
-        )}
-      </RightBar>
-      <Article>
-        <TextR data={data} />
-      </Article>
-      {background && <Background src={background} alt="" />}
-    </Container>
+          {info.authID === username && (
+            <Button type="primary" onClick={() => dispatch(updateInfoW(info))}>
+              <MyLink to={`/infos/new?id=${info.id}`}>修改</MyLink>
+            </Button>
+          )}
+        </RightBar>
+        <Article>
+          <TextR data={info.data} />
+        </Article>
+        {info.background && <Background src={info.background} alt="" />}
+      </Container>}
+    </>
   );
 }
 

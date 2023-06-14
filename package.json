@@ -25,6 +25,7 @@
     "@types/react-transition-group": "^4.4.2",
     "@welldone-software/why-did-you-render": "^6.1.2",
     "antd": "^4.16.13",
+    "axios": "^0.24.0",
     "braft-editor": "^2.3.9",
     "browserslist": "^4.17.3",
     "copy-to-clipboard": "^3.3.1",
@@ -33,6 +34,7 @@
     "dayjs": "^1.10.4",
     "file-loader": "^6.2.0",
     "highlight.js": "^11.2.0",
+    "http-proxy-middleware": "^2.0.1",
     "jira-dev-tool": "^1.6.59",
     "moment": "^2.29.1",
     "nanoid": "^3.1.25",
@@ -69,7 +71,7 @@
     "prepare": "husky install",
     "server": "json-server __json_server_mock__/db.json --watch --port 3001 --middlewares ./__json_server_mock__/middleware.js"
   },
-  "proxy": "http://10.102.32.57:3001",
+  "proxy": "http://101.76.220.18:8000",
   "eslintConfig": {
     "extends": [
       "react-app",

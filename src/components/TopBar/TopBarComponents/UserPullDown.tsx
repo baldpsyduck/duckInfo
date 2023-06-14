@@ -4,6 +4,7 @@ import { updateMe } from "store/features/meSlice";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { basicColor } from "config/color";
+import { userLogout } from "api";
 
 export default function UserPullDown() {
   const me = useAppSelector((store) => store.me.data);
@@ -33,6 +34,7 @@ export default function UserPullDown() {
       <Divider />
       <ExitBtn
         onClick={() => {
+          userLogout();
           dispatch(
             updateMe({
               SESSIONID: "",

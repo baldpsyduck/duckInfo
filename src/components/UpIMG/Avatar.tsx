@@ -3,12 +3,12 @@ import { HTMLProps, useState } from "react";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { basicColor } from "config/color";
 import { nanoid } from "nanoid";
-import avatar from "assets/img/logo.png";
+import avatar from "assets/img/avatar.png";
 import {useAppSelector} from 'store/hooks';
 
 interface UpIMGProps extends HTMLProps<HTMLDivElement> {
   desText?: string;
-  imgFunc?: (e: string) => void;
+  imgFunc?: (file:File,e: string) => void;
   defaultValue?: string;
 }
 
@@ -49,7 +49,7 @@ export default function Avatar(props: UpIMGProps) {
             "load",
             function () {
               setIMGUrl(reader.result + "");
-              if (imgFunc) imgFunc(reader.result + "");
+              if (imgFunc) imgFunc(e.target.files![0],reader.result + "");
             },
             false
           );

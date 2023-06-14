@@ -17,7 +17,8 @@ export const fetchHttp = async (
     method: "GET",
     headers: {
       "Content-Type": data ? "application/json" : "",
-      'Access-Control-Allow-Origin':'*'
+      'Access-Control-Allow-Origin':'*',
+      'Accept': 'application/json,text/plain,*/*'
     },
     credentials: 'include',
     mode:"cors",

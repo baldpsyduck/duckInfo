@@ -4,46 +4,104 @@ import { MailOutlined } from "@ant-design/icons";
 import { user } from "types/user";
 import Avatar from "components/UpIMG/Avatar";
 import { useAppDispatch, useAppSelector } from "store/hooks";
-import { updateAvatar } from "store/features/meSlice";
-import defaultAvatar from 'assets/img/logo.png'
+import { updateAvatar, updateMe } from "store/features/meSlice";
+import { updateUser } from "store/features/userSlice";
+import defaultAvatar from "assets/img/avatar.png";
+import { useMemo, useState } from "react";
+import TextArea from "antd/lib/input/TextArea";
+import { userUpdate } from "api";
 
-export const Profile = ({ user }: { user: user }) => {
-
-  const { avatar, username, email, infos } = user;
+export const Profile = () => {
+  const [changeNickname, setchangeNickname] = useState<boolean>(false);
+  const [myname, setmyname] = useState<string>( "");
   const mename = useAppSelector((store) => store.me.data.username);
+  const me = useAppSelector((store) => store.me.data);
+  const targetuser = useAppSelector((store) => store.user.data);
   const dispatch = useAppDispatch();
+
+  useMemo(() => {
+    setmyname(targetuser.nickname || "");
+  }, [targetuser.nickname]);
 
   return (
     <>
       <Container>
         <Acontainer>
-          {mename === username ? (
+          {mename === targetuser.username ? (
             <Avatar
-              imgFunc={(e) => {
+              imgFunc={(file, e) => {
+                userUpdate({
+                  username:targetuser.username,
+                  nickname: myname,
+                  description: targetuser.description,
+                  avatar: file,
+                });
                 dispatch(updateAvatar(e));
+                dispatch(updateUser({ ...targetuser, avatar: e }));
               }}
               desText="点击上传头像"
               style={{ width: "20rem" }}
             />
           ) : (
-            <AvatarIMG src={avatar||defaultAvatar} />
+            <AvatarIMG src={targetuser.avatar || defaultAvatar} />
           )}
         </Acontainer>
-        <Title>{username}</Title>
+        {mename === targetuser.username ? (
+          <>
+            {changeNickname ? (
+              <ChangeText
+                defaultValue={myname}
+                autoSize
+                onBlur={(e) => {
+                  setmyname(e.currentTarget.value);
+                  dispatch(updateUser({ ...targetuser, nickname: e.currentTarget.value }));
+                  dispatch(updateMe({ ...me, nickname: e.currentTarget.value }));
+                  userUpdate({
+                    username:targetuser.username,
+                    nickname: e.currentTarget.value,
+                    description: targetuser.description,
+                  });
+                  setchangeNickname(false);
+                }}
+                onPressEnter={(e) => {
+                  setmyname(e.currentTarget.value);
+                  dispatch(updateUser({ ...targetuser, nickname: e.currentTarget.value }));
+                  dispatch(updateMe({ ...me, nickname: e.currentTarget.value }));
+                  userUpdate({
+                    username:targetuser.username,
+                    nickname: e.currentTarget.value,
+                    description: targetuser.description,
+                  });
+                  setchangeNickname(false);
+                }}
+              />
+            ) : (
+              <Title
+                onClick={() => {
+                  setchangeNickname(true);
+                }}
+              >
+                {myname}
+              </Title>
+            )}
+          </>
+        ) : (
+          <Title>{myname}</Title>
+        )}
         <SubTitle>
           <MailOutlined />
           <EmailButton
             type={"text"}
             size={"small"}
-            href={`mailto:${email}`}
+            href={`mailto:${targetuser.email}`}
             ghost
           >
-            {email}
+            {targetuser.email}
           </EmailButton>
         </SubTitle>
         <ProjectSummary>
           <ProjectSummaryBlock>
-            <ProjectSummaryNumber>{infos?.length||0}</ProjectSummaryNumber>
+            <ProjectSummaryNumber>{targetuser.infos?.length || 0}</ProjectSummaryNumber>
             <ProjectSummaryText>活动文章</ProjectSummaryText>
           </ProjectSummaryBlock>
           <ProjectSummaryBlock>
@@ -57,10 +115,17 @@ export const Profile = ({ user }: { user: user }) => {
   );
 };
 
-const AvatarIMG=styled.img`
-  width:100%;
-  height:100%
-`
+const ChangeText = styled(TextArea)`
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  text-align: center;
+`;
+
+const AvatarIMG = styled.img`
+  width: 100%;
+  height: 100%;
+`;
 
 const Acontainer = styled.div`
   width: 20rem;

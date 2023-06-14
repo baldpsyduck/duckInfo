@@ -22,11 +22,18 @@ export default function LeftBar({
   setneedTitle,
   setpre,
   pre,
+  onFinish,
 }: {
   settitle: (e: string) => void;
   setneedTitle: (e: boolean) => void;
   setpre: (e: boolean) => void;
   pre: boolean;
+  onFinish?: (
+    title: string,
+    showPic: string,
+    start: string,
+    end: string
+  ) => void;
 }) {
   const [rotate, setrotate] = useState<boolean>(false);
 
@@ -109,7 +116,13 @@ export default function LeftBar({
           }}
         />
         <BottomBtn>
-          <Button>提交</Button>
+          <Button
+            onClick={() => {
+              onFinish && onFinish(title, showPic || "", start, end);
+            }}
+          >
+            提交
+          </Button>
           <Button
             type="primary"
             onClick={() => {

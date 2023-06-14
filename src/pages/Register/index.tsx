@@ -1,13 +1,14 @@
-import { Form, Input, Checkbox, Button, PageHeader, Result } from "antd";
+import { Form, Input, Button, PageHeader, Result, Row, Col } from "antd";
 import { useHistory } from "react-router";
 
 import { useAppDispatch } from "store/hooks";
 import { updateMe } from "store/features/meSlice";
+import { updateUser } from "store/features/userSlice";
 import "./Register.css";
 import { useState } from "react";
 import styled from "@emotion/styled";
 
-import { userRegist } from "api";
+import { userGetV, userRegist } from "api";
 
 const formItemLayout = {
   labelCol: {
@@ -36,6 +37,7 @@ const tailFormItemLayout = {
 export default function Register() {
   const [error, seterror] = useState<string>("");
   const [success, setsuccess] = useState<boolean>(false);
+  const [email, setemail] = useState<string>("");
 
   const history = useHistory();
 
@@ -46,17 +48,20 @@ export default function Register() {
 
     const stuID = studentId || "";
 
-    const info={ ...data, studentId: stuID };
+    const info = { ...data, studentId: stuID };
 
     userRegist(info)
       .then((res) => {
         dispatch(updateMe(info));
+        dispatch(updateUser(info));
         setsuccess(true);
         setTimeout(() => {
-          history.replace(`/user/me/${values.username}`)
+          history.replace(`/user/me/${values.username}`);
         }, 3000);
       })
-      .catch((err) => seterror(err.message));
+      .catch((err) => {
+        seterror(err.response.data.message);
+      });
   };
 
   const [form] = Form.useForm();
@@ -98,24 +103,6 @@ export default function Register() {
             </Form.Item>
 
             <Form.Item
-              name="realname"
-              label="真实姓名"
-              tooltip="请输入真实姓名以方便我们的管理"
-              rules={[{ required: true, message: "请输入你的真实姓名！" }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              name="studentId"
-              label="学工号"
-              tooltip="请输入学工号以方便我们的管理"
-              rules={[{ required: true, message: "请输入你的学工号！" }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
               name="email"
               label="邮箱"
               rules={[
@@ -123,16 +110,25 @@ export default function Register() {
                   type: "email",
                   message: "邮箱格式不正确！",
                 },
+                {
+                  required: true,
+                  message: "请输入你的邮箱！",
+                  whitespace: true,
+                },
               ]}
             >
+              <Input
+                onChange={(e) => {
+                  setemail(e.target.value);
+                }}
+              />
+            </Form.Item>
+
+            <Form.Item name="realname" label="真实姓名">
               <Input />
             </Form.Item>
 
-            <Form.Item
-              name="contactDetail"
-              label="联系方式"
-              tooltip="请输入你的联系方式（QQ、微信、电话）以便其他用户可以联系到你"
-            >
+            <Form.Item name="studentId" label="学工号">
               <Input />
             </Form.Item>
 
@@ -183,26 +179,28 @@ export default function Register() {
               <Input.Password />
             </Form.Item>
 
-            {/* <Form.Item
-              name="agreement"
-              valuePropName="checked"
-              rules={[
-                {
-                  validator: (_, value) =>
-                    value
-                      ? Promise.resolve()
-                      : Promise.reject(
-                          new Error("请阅读兴趣开放实验室用户协议")
-                        ),
-                },
-              ]}
-              {...tailFormItemLayout}
-            >
-              <Checkbox>
-                我已阅读并接受 《
-                <a href="localhost:3000">兴趣开放实验室用户协议</a>》
-              </Checkbox>
-            </Form.Item> */}
+            <Form.Item label="验证码" extra="请检查你的邮箱以获取验证码">
+              <Row gutter={8}>
+                <Col span={12}>
+                  <Form.Item
+                    name="verify"
+                    rules={[{ required: true, message: "请输入验证码！" }]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Button
+                    onClick={() => {
+                      userGetV(email);
+                    }}
+                  >
+                    获取验证码
+                  </Button>
+                </Col>
+              </Row>
+            </Form.Item>
+
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">
                 注册
@@ -215,6 +213,18 @@ export default function Register() {
     </Container>
   );
 }
+
+const VContainer = styled.div`
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  .formitem {
+    flex: auto;
+  }
+  button {
+    flex: 1fr;
+  }
+`;
 
 const ErrorText = styled.span`
   color: red;

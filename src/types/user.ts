@@ -17,7 +17,6 @@ export interface user extends cardUser {
     SESSIONID?: string; 
     password?: string;
     studentID?: number;//学工号
-    contactDetail?: string;//联系方式
     realname?: string;//真实姓名
     infos?: infos[];//参与的项目
     comments?: comment[];//评论

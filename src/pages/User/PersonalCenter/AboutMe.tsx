@@ -1,20 +1,33 @@
 import styled from "@emotion/styled";
-import { Button, Input } from "antd";
-import { useState } from "react";
+import { Input } from "antd";
+import { userUpdate } from "api";
+import { useMemo, useState } from "react";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { updateMe } from "store/features/meSlice";
+import { updateUser } from "store/features/userSlice";
 
 const { TextArea } = Input;
 
 export const AboutMe = ({
-  description,
   authority,
   isMe,
+  username,
+  nickname,
 }: {
-  description: string;
   authority: number;
   isMe: boolean;
+  username: string;
+  nickname: string;
 }) => {
   const [change, setchange] = useState<boolean>(false);
-  const [des, setdes] = useState<string>(description);
+  const [des, setdes] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const me = useAppSelector((store) => store.me.data);
+  const user = useAppSelector((store) => store.user.data);
+
+  useMemo(() => {
+    setdes(user.description||"")
+  }, [user.description])
 
   return (
     <Container>
@@ -25,10 +38,16 @@ export const AboutMe = ({
           autoSize
           onBlur={(e) => {
             setdes(e.currentTarget.value);
+            dispatch(updateMe({ ...me, description: e.currentTarget.value }));
+            dispatch(updateUser({ ...user, description: e.currentTarget.value }));
+            userUpdate({ username, nickname, description: e.currentTarget.value });
             setchange(false);
           }}
           onPressEnter={(e) => {
             setdes(e.currentTarget.value);
+            dispatch(updateMe({ ...me, description: e.currentTarget.value }));
+            dispatch(updateUser({ ...user, description: e.currentTarget.value }));
+            userUpdate({ username, nickname, description: e.currentTarget.value });
             setchange(false);
           }}
         />
@@ -38,7 +57,7 @@ export const AboutMe = ({
             setchange(isMe);
           }}
         >
-          {des}
+          {des || "该用户目前还没有设置信息~"}
         </Text>
       )}
     </Container>
@@ -59,16 +78,4 @@ const Text = styled.div`
   font-size: 1.4rem;
   color: #a0a0a0;
   word-wrap: break-word;
-`;
-
-const UserTagContainer = styled.div`
-  margin: 2rem 0;
-`;
-
-const UserTag = styled.span`
-  font-size: 1.6rem;
-  font-family: "华文中宋", monospace;
-  background-color: #a4deff;
-  padding: 0.6rem 1rem;
-  margin: 0.3rem 0.5rem;
 `;

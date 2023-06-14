@@ -1,5 +1,6 @@
 import { Suspense, lazy, useState, useMemo, useRef, RefObject } from "react";
 import { Route, Switch, Redirect, useHistory } from "react-router";
+import cookie from 'react-cookies'
 
 import TopBar from "components/TopBar";
 import Login from "components/Login";
@@ -21,6 +22,8 @@ import { ArrowDownOutlined } from "@ant-design/icons";
 
 import "./App.less";
 import styled from "@emotion/styled";
+import { userGetUser } from "api";
+import { updateMe } from "store/features/meSlice";
 
 const contentStyle: any = {
   height: "100vh",
@@ -58,6 +61,12 @@ export default function App() {
   useMemo(() => {
     setwheel(loc == "/home");
   }, [loc]);
+
+  useMemo(()=>{
+    userGetUser({who:cookie.load('username')}).then((res)=>{
+      dispatch(updateMe(res.data));
+    })
+  },[])
 
   return (
     <>

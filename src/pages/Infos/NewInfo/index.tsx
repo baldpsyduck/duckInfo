@@ -5,10 +5,12 @@ import LeftBar from "./LeftBar";
 import Preview from "./Preview";
 import { CSSTransition } from "react-transition-group";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { updateInfoW,updateAuthID } from "store/features/infoWSlice";
+import { updateInfoW, updateAuthID } from "store/features/infoWSlice";
 import { Result } from "antd";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, useHistory } from "react-router";
 import qs from "querystring";
+import { nanoid } from "nanoid";
+import { push } from "store/features/infosSlice";
 
 interface TextWProps extends RouteComponentProps {}
 
@@ -22,14 +24,27 @@ export default function NewInfo(props: TextWProps) {
 
   const { id } = qs.parse(props.location.search.slice(1));
   const me = useAppSelector((store) => store.me.data.username);
+  const history = useHistory();
 
-  const { authID: auth, title: inititle } = useAppSelector(
-    (store) => store.infoW
-  );
+  const {
+    authID: auth,
+    title: inititle,
+    data,
+    background,
+  } = useAppSelector((store) => store.infoW);
 
   useMemo(() => {
     if (!id) {
-      dispatch(updateInfoW({ id: "", title: "", authID: "", data: "",start:"",end:"" }));
+      dispatch(
+        updateInfoW({
+          id: "",
+          title: "",
+          authID: "",
+          data: "",
+          start: "",
+          end: "",
+        })
+      );
       settitle("");
     }
     setpermit(me === auth);
@@ -57,8 +72,29 @@ export default function NewInfo(props: TextWProps) {
                   setpre={setpre}
                   setneedTitle={setneedTitle}
                   settitle={settitle}
+                  onFinish={(t, sp, start, end) => {
+                    dispatch(
+                      push({
+                        id: id?id+"":nanoid(),
+                        title: t||"未命名通知",
+                        start: start,
+                        end: end,
+                        authID: auth,
+                        data: data,
+                        background,
+                        showPic: sp,
+                      })
+                    );
+                    history.replace(`/user/me/${auth}`);
+                  }}
                 />
-                <TextW onChange={()=>{dispatch(updateAuthID(me))}} needTitle={needTitle} title={title} />
+                <TextW
+                  onChange={() => {
+                    dispatch(updateAuthID(me));
+                  }}
+                  needTitle={needTitle}
+                  title={title}
+                />
               </Container>
             </>
           ) : (

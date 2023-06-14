@@ -3,6 +3,7 @@ import { Spin, Card, Result, Button } from "antd";
 import CommentList from "components/CommentList";
 import { Profile } from "./Profile";
 import { AboutMe } from "./AboutMe";
+import Infos from "./Infos";
 import { userGetUser } from "api";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { updateUser } from "store/features/userSlice";
@@ -21,21 +22,15 @@ export default function PersonalCenter(props: any) {
 
   useMemo(() => {
     setspinning(true);
-    
-    // Axios.get("http://10.102.32.57:3001/api/user/getUser?who=qwe",{withCredentials: true})
-
     userGetUser({ who: username })
-      .then((res:any) => {
+      .then((res: any) => {
         dispatch(updateUser(res.data));
         setspinning(false);
       })
       .catch((err) => {
-        if (err.code >= 500 && err.code < 600) {
-          seterror(err);
-        }
+        seterror(err);
         setspinning(false);
       });
-
   }, [username]);
 
   const user = useAppSelector((store) => store.user.data);
@@ -62,22 +57,24 @@ export default function PersonalCenter(props: any) {
       ) : (
         <Container className="PCContainer">
           <ProfileContainer>
-            <Profile user={user} />
+            <Profile />
           </ProfileContainer>
-          <ProjectContainer size={"small"}>
+          <ProjectContainer>
+            <Infos />
           </ProjectContainer>
-          <AboutMeContainer size={"small"}>
+          <AboutMeContainer>
             <AboutMe
-              description={user.description || ""}
               authority={user.authority}
-              isMe={user.username===me.username}
+              isMe={user.username === me.username}
+              username={me.username}
+              nickname={me.nickname || ""}
             />
           </AboutMeContainer>
         </Container>
       )}
     </>
   );
-} 
+}
 
 const Container = styled.div`
   display: grid;
@@ -92,12 +89,16 @@ const Container = styled.div`
   margin-top: 30px;
 `;
 
-const ProfileContainer = styled(Card)`
+const ProfileContainer = styled.div`
   grid-area: profile;
+  background: white;
+  padding: 3rem;
 `;
 
-const CardWithTopBorder = styled(Card)`
-  border-top: 0.7rem solid #2cb3ff;
+const CardWithTopBorder = styled.div`
+  padding: 1.5rem;
+  border-top: 0.7rem solid #ffc11f;
+  background-color: white;
 `;
 
 const ProjectContainer = styled(CardWithTopBorder)`

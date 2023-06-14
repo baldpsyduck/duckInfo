@@ -5,7 +5,7 @@ import UserPullDown from "./UserPullDown";
 import { basicColor } from "config/color";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { changeLogin } from "store/features/loginSlice";
-import avatarUrl from 'assets/img/logo.png'
+import avatarUrl from 'assets/img/avatar.png'
 
 export default function User() {
   const me = useAppSelector((store) => store.me.data);

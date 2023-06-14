@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eaec7e66-ffd5-4c3f-a696-2d351a55b862" name="默认变更列表" comment="">
-      <change beforePath="$PROJECT_DIR$/__json_server_mock__/db.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/__json_server_mock__/middleware.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/login/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/login/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/project-list/search-panel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/project-list/search-panel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="eaec7e66-ffd5-4c3f-a696-2d351a55b862" name="默认变更列表" comment="默认变更列表" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,6 +48,7 @@
       <workItem from="1620918798507" duration="266000" />
       <workItem from="1620919138635" duration="195000" />
       <workItem from="1621087869039" duration="176000" />
+      <workItem from="1639708444024" duration="3000" />
     </task>
     <servers />
   </component>
